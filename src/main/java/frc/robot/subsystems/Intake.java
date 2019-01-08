@@ -33,6 +33,7 @@ public class Intake extends Subsystem {
   public void spitOut(){
       intake.set(ControlMode.PercentOutput, powerOut);
   }
+  
 
   public void stopIntake(){
       intake.set(ControlMode.PercentOutput, 0);
