@@ -24,4 +24,8 @@ public class RobotMap {
     public static final int RF_MOTOR_PORT = 4;
     public static final int RM_MOTOR_PORT = 5;
     public static final int RR_MOTOR_PORT = 6;
+    public static final int L1_ELEVATOR_PORT = 7;
+    public static final int L2_ELEVATOR_PORT = 8;
+    public static final int R1_ELEVATOR_PORT = 9;
+    public static final int R2_ELEVATOR_PORT = 10;
 }

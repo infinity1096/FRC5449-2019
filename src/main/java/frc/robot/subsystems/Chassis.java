@@ -66,7 +66,7 @@ public class Chassis extends Subsystem {
 
   public void drive(double input){
     //testmotor.set(ControlMode.PercentOutput, input);
-    testmotor.set(ControlMode.Velocity, input * 200);
+    testmotor.set(ControlMode.Velocity, input * 300);
   }
 
   public double getP(){
