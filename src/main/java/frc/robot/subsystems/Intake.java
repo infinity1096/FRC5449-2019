@@ -7,14 +7,36 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
 public class Intake extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  private TalonSRX intake = new TalonSRX(RobotMap.INTAKE_MOTOR);
+  double powerIn = RobotMap.powerIn;
+  double powerOut = RobotMap.powerOut;
+  
+  public Intake(){
+      
+  }
+
+  public void takeIn(){
+      intake.set(ControlMode.PercentOutput, powerIn);
+  }
+
+  public void spitOut(){
+      intake.set(ControlMode.PercentOutput, powerOut);
+  }
+
+  public void stopIntake(){
+      intake.set(ControlMode.PercentOutput, 0);
+  }
 
   @Override
   public void initDefaultCommand() {
@@ -22,3 +44,4 @@ public class Intake extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 }
+
