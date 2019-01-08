@@ -24,4 +24,8 @@ public class RobotMap {
     public static final int RF_MOTOR_PORT = 4;
     public static final int RM_MOTOR_PORT = 5;
     public static final int RR_MOTOR_PORT = 6;
+    //intake
+    public static final int INTAKE_MOTOR = 11;
+    public static final int powerIn = 1;//this value remains to be determined
+    public static final int powerOut = -1;//this value remains to be determined
 }
