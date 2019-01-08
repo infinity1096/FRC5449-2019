@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,7 +18,7 @@ public class Pusher extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public Pusher(){
-
+     
   }
 
   @Override
@@ -24,4 +26,9 @@ public class Pusher extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
+
+ /* public void pusherUp(){
+    int a= 1; 
+
+  }*/
 }
