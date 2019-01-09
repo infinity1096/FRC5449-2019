@@ -21,8 +21,8 @@ public class reset extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.chassis.testmotor.set(ControlMode.PercentOutput, 0);
-    Robot.chassis.testmotor.setSelectedSensorPosition(0);
+    //Robot.chassis.testmotor.set(ControlMode.PercentOutput, 0);
+    //Robot.chassis.testmotor.setSelectedSensorPosition(0);
   }
 
   // Called repeatedly when this Command is scheduled to run

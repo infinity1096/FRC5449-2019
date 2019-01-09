@@ -8,10 +8,12 @@
 package frc.robot.commands;
 
 import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
+import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.FileReadWrite.ProfileReader;
 import frc.robot.Profiles.Profile1;
 import frc.robot.subsystems.Chassis;
 
@@ -23,9 +25,10 @@ public class TestMotionProfile extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.chassis.testmotor.selectProfileSlot(2, 0);
     BufferedTrajectoryPointStream stream = new BufferedTrajectoryPointStream();
-    stream.Write(Chassis.convertTrajectoryPoint(Profile1.Points,Profile1.kNumPoints));
+    double[][] array = Robot.pfr.getArray();
+    int count = Robot.pfr.getCount();
+    stream.Write(Robot.chassis.convertTrajectoryPoint(array,count));
     Robot.chassis.testmotor.startMotionProfile(stream,10, ControlMode.MotionProfile);
   }
 

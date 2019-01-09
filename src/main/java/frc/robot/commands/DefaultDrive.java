@@ -23,11 +23,12 @@ public class DefaultDrive extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    double inputx = Robot.oi.stick0.getRawAxis(0);
-    double inputy = Robot.oi.stick0.getRawAxis(1);
-    Robot.chassis.drive(inputy);
+  protected void execute() {/*
+    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
+    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
+    Robot.chassis.arcadeDrive_Speed(-inputy, inputx*0.8);*/
   }
+
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
