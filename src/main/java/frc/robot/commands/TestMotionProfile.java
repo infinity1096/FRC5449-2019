@@ -7,28 +7,35 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
+import com.ctre.phoenix.motion.TrajectoryPoint;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.FileReadWrite.ProfileReader;
+import frc.robot.Profiles.Profile1;
+import frc.robot.subsystems.Chassis;
 
-public class DefaultDrive extends Command {
-  public DefaultDrive() {
-    // Use requires() here to declare subsystem dependencies
+public class TestMotionProfile extends Command {
+  public TestMotionProfile() {
     requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    BufferedTrajectoryPointStream stream = new BufferedTrajectoryPointStream();
+    double[][] array = Robot.pfr.getArray();
+    int count = Robot.pfr.getCount();
+    stream.Write(Robot.chassis.convertTrajectoryPoint(array,count));
+    Robot.chassis.testmotor.startMotionProfile(stream,10, ControlMode.MotionProfile);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {/*
-    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
-    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
-    Robot.chassis.arcadeDrive_Speed(-inputy, inputx*0.8);*/
+  protected void execute() {
   }
-
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

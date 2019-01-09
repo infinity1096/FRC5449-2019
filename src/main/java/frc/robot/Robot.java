@@ -10,10 +10,14 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.FileReadWrite.ProfileReader;
+import frc.robot.FileReadWrite.ProfileWriter;
+import frc.robot.Profiles.Profile1;
 import frc.robot.subsystems.Chassis;
 
 
@@ -24,10 +28,12 @@ import frc.robot.subsystems.Chassis;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
+
 public class Robot extends TimedRobot {
-  public static OI oi = new OI();
-  public TalonSRX motor1;
   public static Chassis chassis = new Chassis();
+  public static OI oi = new OI();
+  public static ProfileWriter pfw = new ProfileWriter();
+  public static ProfileReader pfr = new ProfileReader();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -37,8 +43,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
-    // chooser.addOption("My Auto", new MyAutoCommand());
+    Timer timer = new Timer();
+    timer.reset();
+    timer.start();
+    pfr.Setaddress("home/lvuser/frc/Profile.csv");
+    new Thread(pfr).start();
+    while(!pfr.is_finished()){
+    }
+    timer.stop();
+    System.out.println("Time" + String.valueOf(timer.get()));
+    System.out.println("Count" + String.valueOf(pfr.getCount()));
     SmartDashboard.putData("Auto mode", m_chooser);
   }
 
@@ -106,10 +120,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    double [][] array = pfr.getArray();
+    int count = pfr.getCount();
+    pfw.SetAddress("home/lvuser/frc/Profile2.csv");
+    pfw.loadBuffer(array, count);
+    new Thread(pfw).start();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -121,8 +136,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putNumber("Position", chassis.getP());
-    SmartDashboard.putNumber("Velocity", chassis.getV());
   }
 
   /**
