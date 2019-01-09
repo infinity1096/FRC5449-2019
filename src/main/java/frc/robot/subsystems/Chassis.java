@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import java.awt.Point;
+
+import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -22,27 +25,56 @@ import frc.robot.commands.DefaultDrive;
  */
 public class Chassis extends Subsystem {
 
-  private TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
-  
+  public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
+  /*
   private TalonSRX lf = new TalonSRX(RobotMap.LF_MOTOR_PORT);
   private TalonSRX lm = new TalonSRX(RobotMap.LM_MOTOR_PORT);
   private TalonSRX lr = new TalonSRX(RobotMap.LR_MOTOR_PORT);
   private TalonSRX rf = new TalonSRX(RobotMap.RF_MOTOR_PORT);
   private TalonSRX rm = new TalonSRX(RobotMap.RM_MOTOR_PORT);
   private TalonSRX rr = new TalonSRX(RobotMap.RR_MOTOR_PORT);
-  
+  */
   public Chassis(){
-    /*testmotor.setSensorPhase(false);
+    testmotor.setSensorPhase(false);
     testmotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,30);
-    //testmotor.setSelectedSensorPosition(0, 0, 10);*/
-    
+    //testmotor.setSelectedSensorPosition(0, 0, 10);
+    /*
     lm.follow(lf);
     lr.follow(lf);
     rm.follow(rf);
     rr.follow(rf);
-    
+    */
   }
 
+  public static TrajectoryPoint[] convertTrajectoryPoint(double[][] profile, int totalCount){
+    TrajectoryPoint point = new TrajectoryPoint();
+    TrajectoryPoint[] points = new TrajectoryPoint[totalCount];
+    for (int i = 0; i < totalCount; ++i){
+      double K_sensor = 13;
+      point.position = profile[i][0] * K_sensor;//Rotations -> units
+      point.velocity = profile[i][1] / 600.0f * K_sensor;//RPM -> units/100ms
+      point.timeDur = (int)profile[i][2];
+      point.profileSlotSelect0 = 2;
+      point.useAuxPID  = false;
+      point.zeroPos = false;
+      if (i==0){
+        point.zeroPos = true;
+      }
+  
+      point.isLastPoint = false;
+      if (i+1==totalCount){
+        point.isLastPoint = true;
+      } 
+      //save it to the long array.
+      points[i] = point;
+    }
+    return points;
+  }
+
+
+
+
+  /*
   public void tankDrive(double lt_input, double rt_input){
       lf.set(ControlMode.PercentOutput, lt_input);
       rf.set(ControlMode.PercentOutput, rt_input);
@@ -88,6 +120,7 @@ public double[] getCurrent(){
   return results;
 
 }
+*/
 
 public double deathZone(double value, double zone){
     if(Math.abs(value) > zone ){
@@ -97,24 +130,11 @@ public double deathZone(double value, double zone){
       return 0;
     }
 }
-  //measurments
-  /*
-  
-  
 
-  public double[][] getState(){
-    double [][] results = {{0,0},{0,0}};
-    //results [0,:] = Position, [1,:] = velocity.
-    //TODO
-
-  }
-  */
-
-  
 
   public void drive(double input){
     //testmotor.set(ControlMode.PercentOutput, input);
-    testmotor.set(ControlMode.Velocity, input * 300);
+    //testmotor.set(ControlMode.Velocity, input * 300);
   }
 
   public double getP(){

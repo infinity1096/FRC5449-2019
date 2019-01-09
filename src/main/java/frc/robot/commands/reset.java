@@ -7,26 +7,27 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DefaultDrive extends Command {
-  public DefaultDrive() {
+public class reset extends Command {
+  public reset() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.chassis);
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.chassis.testmotor.set(ControlMode.PercentOutput, 0);
+    Robot.chassis.testmotor.setSelectedSensorPosition(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double inputx = Robot.oi.stick0.getRawAxis(0);
-    double inputy = Robot.oi.stick0.getRawAxis(1);
-    Robot.chassis.drive(inputy);
   }
 
   // Make this return true when this Command no longer needs to run execute()

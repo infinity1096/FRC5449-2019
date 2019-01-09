@@ -24,10 +24,11 @@ import frc.robot.subsystems.Chassis;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
+
 public class Robot extends TimedRobot {
-  public static OI oi = new OI();
-  public TalonSRX motor1;
   public static Chassis chassis = new Chassis();
+  public static OI oi = new OI();
+
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
