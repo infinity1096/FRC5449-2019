@@ -7,19 +7,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.FileReadWrite.ProfileReader;
-import frc.robot.FileReadWrite.ProfileWriter;
-import frc.robot.Profiles.Profile1;
+import frc.robot.Odometry.Odometry;
 import frc.robot.subsystems.Chassis;
-import frc.robot.subsystems.PlateDispenser;
+
 
 
 /**
@@ -32,10 +30,14 @@ import frc.robot.subsystems.PlateDispenser;
 
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
-  public static PlateDispenser platedispenser = new PlateDispenser();
+  //public static PlateDispenser platedispenser = new PlateDispenser();
+  //public static Intake intake = new Intake();
+  //public static Holder holder = new Holder();
+  //public static Elevator elevator = new Elevator();
   public static OI oi = new OI();
-  public static ProfileWriter pfw = new ProfileWriter();
-  public static ProfileReader pfr = new ProfileReader();
+  //public static Odometry om = new Odometry(chassis.lf);
+  //public static ProfileWriter pfw = new ProfileWriter();
+  //public static ProfileReader pfr = new ProfileReader();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -45,6 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    /*
     Timer timer = new Timer();
     timer.reset();
     timer.start();
@@ -56,6 +59,10 @@ public class Robot extends TimedRobot {
     System.out.println("Time" + String.valueOf(timer.get()));
     System.out.println("Count" + String.valueOf(pfr.getCount()));
     SmartDashboard.putData("Auto mode", m_chooser);
+    */
+    //Notifier notifier = new Notifier(om);
+    //notifier.startPeriodic(0.02);
+
   }
 
   /**
@@ -122,14 +129,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    double [][] array = pfr.getArray();
-    int count = pfr.getCount();
-    pfw.SetAddress("home/lvuser/frc/Profile2.csv");
-    pfw.loadBuffer(array, count);
-    new Thread(pfw).start();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
   }
 
   /**
@@ -137,6 +136,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    //chassis.testmotor.set(ControlMode.PercentOutput, 0.5);
+    //System.out.println("Position" + String.valueOf(chassis.getEncoderValue()[0][0]));
+    //System.out.println("Velocity" + String.valueOf(chassis.getEncoderValue()[1][0]));
     Scheduler.getInstance().run();
   }
 

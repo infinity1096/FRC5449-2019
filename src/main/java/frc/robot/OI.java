@@ -10,8 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.TestMotionProfile;
-import frc.robot.commands.reset;
+import frc.robot.Profiles.Profile1;
+import frc.robot.commands.Chassis.ProfileDrive;
+import frc.robot.commands.Chassis.ProfileDrive1;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,8 +32,9 @@ public class OI {
   
 
   OI(){
-    button1.whenPressed(new TestMotionProfile());
-    button2.whenPressed(new reset());
+    button1.whenPressed(new ProfileDrive(Profile1.Points,Profile1.kNumPoints));
+    button3.whenPressed(new ProfileDrive1(Profile1.Points,Profile1.kNumPoints));
+    
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

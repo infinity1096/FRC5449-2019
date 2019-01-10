@@ -5,30 +5,38 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
+package frc.robot.commands.Chassis;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class reset extends Command {
-  public reset() {
+public class DefaultDrive extends Command {
+  public DefaultDrive() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.chassis.testmotor.set(ControlMode.PercentOutput, 0);
-    //Robot.chassis.testmotor.setSelectedSensorPosition(0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    /*
+    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
+    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
+    if (-inputy > 0.8){
+    Robot.chassis.arcadeDrive_Speed(0.8, 0,160);
+    }else if (-inputy < -0.8){
+      Robot.chassis.arcadeDrive_Speed(-0.8, 0,160);
+    }else{
+      Robot.chassis.arcadeDrive_Speed(0.8*-inputy, inputx*0.3,160);
+    }
+    */
   }
+
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

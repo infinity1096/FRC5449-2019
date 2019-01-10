@@ -5,40 +5,40 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.PlateDispenser;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DefaultDrive extends Command {
-  public DefaultDrive() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.chassis);
+public class RetrivePlate extends Command {
+  public RetrivePlate() {
+    //requires(Robot.platedispenser);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+   //Robot.platedispenser.release();
+   // Robot.platedispenser.extend();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {/*
-    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
-    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
-    Robot.chassis.arcadeDrive_Speed(-inputy, inputx*0.8);*/
+  protected void execute() {
   }
-
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    //return Robot.platedispenser.get()[0] && Robot.platedispenser.get()[1];
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+   //Robot.platedispenser.hold();
+    //Robot.platedispenser.retract();
   }
 
   // Called when another command which requires one or more of the same

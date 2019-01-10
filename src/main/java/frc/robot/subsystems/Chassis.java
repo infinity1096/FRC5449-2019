@@ -11,23 +11,20 @@ import java.awt.Point;
 
 import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import org.apache.commons.math3.filter.KalmanFilter;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.DefaultDrive;
+import frc.robot.commands.Chassis.DefaultDrive;;
 
 /**
  * Add your docs here.
  */
 public class Chassis extends Subsystem {
 
-  public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
+public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
 
-  private TalonSRX lf = new TalonSRX(RobotMap.CHASSIS_LF_MOTOR_PORT);
+  public TalonSRX lf = new TalonSRX(RobotMap.CHASSIS_LF_MOTOR_PORT);
   private TalonSRX lm = new TalonSRX(RobotMap.CHASSIS_LM_MOTOR_PORT);
   private TalonSRX lr = new TalonSRX(RobotMap.CHASSIS_LR_MOTOR_PORT);
   private TalonSRX rf = new TalonSRX(RobotMap.CHASSIS_RF_MOTOR_PORT);
@@ -35,10 +32,7 @@ public class Chassis extends Subsystem {
   private TalonSRX rr = new TalonSRX(RobotMap.CHASSIS_RR_MOTOR_PORT);
 
   public Chassis(){
-    //testmotor.setSensorPhase(false);
-    //testmotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,0,30);
-    //testmotor.setSelectedSensorPosition(0, 0, 10);
-    
+    /*
     lm.follow(lf);
     lr.follow(lf);
     rm.follow(rf);
@@ -49,9 +43,9 @@ public class Chassis extends Subsystem {
     rf.setInverted(true);
     rm.setInverted(true);
     rr.setInverted(true);
-    
+    */
   }
-
+  
   public static TrajectoryPoint[] convertTrajectoryPoint(double[][] profile, int totalCount){
     TrajectoryPoint[] points = new TrajectoryPoint[totalCount];
     for (int i = 0; i < totalCount; ++i){
@@ -77,11 +71,10 @@ public class Chassis extends Subsystem {
     }
     return points;
   }
-
+/*
   public void tankDrive(double lt_input, double rt_input){
       lf.set(ControlMode.PercentOutput, lt_input);
       rf.set(ControlMode.PercentOutput, rt_input);
-     
   }
 
   public double range(double value, double max, double min){
@@ -108,15 +101,20 @@ public class Chassis extends Subsystem {
       rf.set(ControlMode.PercentOutput, rightPower);
   }
 
-  public void arcadeDrive_Speed(double Power, double Rotate){//this is used for giving power for straight running and rotating 
+  public void arcadeDrive_Speed(double Power, double Rotate,double Kspeed){//this is used for giving power for straight running and rotating 
     double leftPower, rightPower;
-    double Kspeed = 2000;
     Power = Kspeed * Power;
     Rotate = Kspeed * Rotate;
     leftPower = range(Power +  Rotate, Kspeed, -Kspeed);
     rightPower = range(Power - Rotate, Kspeed, -Kspeed);
+    lf.selectProfileSlot(1, 0);
+    rf.selectProfileSlot(1, 0);
     lf.set(ControlMode.Velocity, leftPower);
     rf.set(ControlMode.Velocity, rightPower);
+}
+
+public void update(){
+
 }
   
 public double[][] getEncoderValue(){
@@ -134,7 +132,13 @@ public double[] getCurrent(){
   return results;
 
 }
-
+*/
+public double[][] getEncoderValue(){
+  double encoderPosition[] = {testmotor.getSelectedSensorPosition()};
+  double encoderVelocity[] = {testmotor.getSelectedSensorPosition()};
+  double encoderValue[][] = {encoderPosition, encoderVelocity};
+  return encoderValue;
+}
 
 public double deathZone(double value, double zone){
     if(Math.abs(value) > zone ){

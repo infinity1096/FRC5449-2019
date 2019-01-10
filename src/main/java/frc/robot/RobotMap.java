@@ -24,16 +24,16 @@ public class RobotMap {
     public static final int CHASSIS_RF_MOTOR_PORT = 8;
     public static final int CHASSIS_RM_MOTOR_PORT = 9;
     public static final int CHASSIS_RR_MOTOR_PORT = 10;
-
+    //Elevator
     public static final int ELEVATOR_L1_MOTOR_PORT = 7;
     public static final int ELEVATOR_L2_MOTOR_PORT = 8;
     public static final int ELEVATOR_R1_MOTOR_PORT = 9;
     public static final int ELEVATOR_R2_MOTOR_PORT = 10;
-
+    //Holder
+    public static final int HOLDER_SHOOTER_MOTOR_PORT = 11;
+    public static final int HOLDER_TURNER_MOTOR_PORT = 12;
     //intake
     public static final int INTAKE_MOTOR = 11;
-    public static final int powerIn = 1;//this value remains to be determined
-    public static final int powerOut = -1;//this value remains to be determined
 //Pneumatics
   //PCM
     public static final int PCM_PORT = 17;
@@ -45,4 +45,20 @@ public class RobotMap {
   //touch sensor
     public static final int PLATEDISPENSER_S1_TOUCH_PORT = 0;
     public static final int PLATEDISPENSER_S2_TOUCH_PORT = 1;
+  //IR sensor
+    public static final int HOLDER_HOLDERSENSOR_IR_PORT = 2;
+
+//Parameters
+  //Elevator
+  public static final long ELEVATOR_DOWN_POS = 0;
+  public static final long ELEVATOR_UP_POS = 0;//this value remains to be determined
+
+  //Holder
+    public static final double HOLDER_OUT_POWER = 1.0;
+    public static final double HOLDER_IN_POWER = 0.2;
+    public static final long HOLDER_UP_POSITION = 0;//this value remains to be determined
+    public static final long HOLDER_DOWN_POSITION = 0;//this value remains to be determined
+  //intake
+    public static final int powerIn = 1;//this value remains to be determined
+    public static final int powerOut = -1;//this value remains to be determined
 }
