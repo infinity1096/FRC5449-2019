@@ -19,10 +19,10 @@ import frc.robot.RobotMap;
 public class Elevator extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private TalonSRX l1 = new TalonSRX(RobotMap.L1_ELEVATOR_PORT);
-  private TalonSRX l2 = new TalonSRX(RobotMap.L2_ELEVATOR_PORT);
-  private TalonSRX r1 = new TalonSRX(RobotMap.R1_ELEVATOR_PORT);
-  private TalonSRX r2 = new TalonSRX(RobotMap.R2_ELEVATOR_PORT);
+  private TalonSRX l1 = new TalonSRX(RobotMap.ELEVATOR_L1_MOTOR_PORT);
+  private TalonSRX l2 = new TalonSRX(RobotMap.ELEVATOR_L2_MOTOR_PORT);
+  private TalonSRX r1 = new TalonSRX(RobotMap.ELEVATOR_R1_MOTOR_PORT);
+  private TalonSRX r2 = new TalonSRX(RobotMap.ELEVATOR_R2_MOTOR_PORT);
   public Elevator(){
     l1.setSensorPhase(false);
     l2.follow(l1);

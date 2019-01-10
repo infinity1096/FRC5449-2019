@@ -7,7 +7,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -15,6 +18,43 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class PlateDispenser extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  private Solenoid pusher;
+  private Solenoid holder;
+  private DigitalInput s1;
+  private DigitalInput s2;  
+
+  public PlateDispenser(){
+    this.pusher = new Solenoid(RobotMap.PLATEDISPENSER_PUSHER_SOLENOID_PORT);
+    this.holder = new Solenoid(RobotMap.PLATEDISPENSER_HOLDER_SOLENOID_PORT);
+    this.s1 = new DigitalInput(RobotMap.PLATEDISPENSER_S1_TOUCH_PORT);
+    this.s1 = new DigitalInput(RobotMap.PLATEDISPENSER_S2_TOUCH_PORT);
+  }
+
+  //Basic commands
+  public void extend(){
+    this.pusher.set(true);
+  }
+
+  public void retract(){
+    this.pusher.set(false);
+  }
+
+  public void hold(){
+    this.holder.set(true);
+  }
+
+  public void release(){
+    this.holder.set(false);
+  }
+
+
+  public boolean[] get(){
+    boolean[] results = new boolean[2];
+    results[0] = this.s1.get();
+    results[1] = this.s2.get(); 
+    return results;
+  }
 
   @Override
   public void initDefaultCommand() {

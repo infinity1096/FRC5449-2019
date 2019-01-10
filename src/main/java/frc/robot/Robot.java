@@ -19,6 +19,7 @@ import frc.robot.FileReadWrite.ProfileReader;
 import frc.robot.FileReadWrite.ProfileWriter;
 import frc.robot.Profiles.Profile1;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.PlateDispenser;
 
 
 /**
@@ -31,6 +32,7 @@ import frc.robot.subsystems.Chassis;
 
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
+  public static PlateDispenser platedispenser = new PlateDispenser();
   public static OI oi = new OI();
   public static ProfileWriter pfw = new ProfileWriter();
   public static ProfileReader pfr = new ProfileReader();

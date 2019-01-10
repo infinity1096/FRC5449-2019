@@ -27,12 +27,12 @@ public class Chassis extends Subsystem {
 
   public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
 
-  private TalonSRX lf = new TalonSRX(RobotMap.LF_MOTOR_PORT);
-  private TalonSRX lm = new TalonSRX(RobotMap.LM_MOTOR_PORT);
-  private TalonSRX lr = new TalonSRX(RobotMap.LR_MOTOR_PORT);
-  private TalonSRX rf = new TalonSRX(RobotMap.RF_MOTOR_PORT);
-  private TalonSRX rm = new TalonSRX(RobotMap.RM_MOTOR_PORT);
-  private TalonSRX rr = new TalonSRX(RobotMap.RR_MOTOR_PORT);
+  private TalonSRX lf = new TalonSRX(RobotMap.CHASSIS_LF_MOTOR_PORT);
+  private TalonSRX lm = new TalonSRX(RobotMap.CHASSIS_LM_MOTOR_PORT);
+  private TalonSRX lr = new TalonSRX(RobotMap.CHASSIS_LR_MOTOR_PORT);
+  private TalonSRX rf = new TalonSRX(RobotMap.CHASSIS_RF_MOTOR_PORT);
+  private TalonSRX rm = new TalonSRX(RobotMap.CHASSIS_RM_MOTOR_PORT);
+  private TalonSRX rr = new TalonSRX(RobotMap.CHASSIS_RR_MOTOR_PORT);
 
   public Chassis(){
     //testmotor.setSensorPhase(false);
@@ -122,7 +122,7 @@ public class Chassis extends Subsystem {
 public double[][] getEncoderValue(){
     double encoderPosition[] = {lf.getSelectedSensorPosition(), rf.getSelectedSensorPosition()};
     double encoderVelocity[] = {lf.getSelectedSensorVelocity(), rf.getSelectedSensorVelocity()};
-    double encoderValue[][] = {encoderVelocity, encoderPosition};
+    double encoderValue[][] = {encoderPosition, encoderVelocity};
 
     return encoderValue;
 }
