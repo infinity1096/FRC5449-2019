@@ -10,8 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class RetrivePlate extends Command {
-  public RetrivePlate() {
+public class RetrievePlate extends Command {
+  public RetrievePlate() {
     requires(Robot.platedispenser);
   }
 
