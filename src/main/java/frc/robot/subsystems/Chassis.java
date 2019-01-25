@@ -7,32 +7,26 @@
 
 package frc.robot.subsystems;
 
-import java.awt.Point;
-
 import com.ctre.phoenix.motion.TrajectoryPoint;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.Chassis.DefaultDrive;;
+import frc.robot.commands.Chassis.DefaultDrive;
 
-/**
- * Add your docs here.
- */
 public class Chassis extends Subsystem {
 
-public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
-
-  public TalonSRX lf = new TalonSRX(RobotMap.CHASSIS_LF_MOTOR_PORT);
-  private TalonSRX lm = new TalonSRX(RobotMap.CHASSIS_LM_MOTOR_PORT);
-  private TalonSRX lr = new TalonSRX(RobotMap.CHASSIS_LR_MOTOR_PORT);
-  private TalonSRX rf = new TalonSRX(RobotMap.CHASSIS_RF_MOTOR_PORT);
-  private TalonSRX rm = new TalonSRX(RobotMap.CHASSIS_RM_MOTOR_PORT);
-  private TalonSRX rr = new TalonSRX(RobotMap.CHASSIS_RR_MOTOR_PORT);
-
+  private CANSparkMax lf = new CANSparkMax(RobotMap.CHASSIS_LF_MOTOR_PORT,MotorType.kBrushless);
+  private CANSparkMax lm = new CANSparkMax(RobotMap.CHASSIS_LM_MOTOR_PORT,MotorType.kBrushless);
+  private CANSparkMax lr = new CANSparkMax(RobotMap.CHASSIS_LR_MOTOR_PORT,MotorType.kBrushless);
+  private CANSparkMax rf = new CANSparkMax(RobotMap.CHASSIS_RF_MOTOR_PORT,MotorType.kBrushless);
+  private CANSparkMax rm = new CANSparkMax(RobotMap.CHASSIS_RM_MOTOR_PORT,MotorType.kBrushless);
+  private CANSparkMax rr = new CANSparkMax(RobotMap.CHASSIS_RR_MOTOR_PORT,MotorType.kBrushless);
+  
   public Chassis(){
-    /*
+    
+
     lm.follow(lf);
     lr.follow(lf);
     rm.follow(rf);
@@ -43,7 +37,7 @@ public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
     rf.setInverted(true);
     rm.setInverted(true);
     rr.setInverted(true);
-    */
+    
   }
   
   public static TrajectoryPoint[] convertTrajectoryPoint(double[][] profile, int totalCount){
@@ -76,7 +70,7 @@ public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
       lf.set(ControlMode.PercentOutput, lt_input);
       rf.set(ControlMode.PercentOutput, rt_input);
   }
-
+*/
   public double range(double value, double max, double min){
       double finalValue = 0.0;
       if(value > max ){
@@ -97,10 +91,10 @@ public TalonSRX testmotor = new TalonSRX(RobotMap.TESTING_MOTOR_PORT);
       double leftPower, rightPower;
       leftPower = range(Power +  Rotate, 1, -1);
       rightPower = range(Power - Rotate, 1, -1);
-      lf.set(ControlMode.PercentOutput, leftPower);
-      rf.set(ControlMode.PercentOutput, rightPower);
+      lf.set(leftPower);
+      rf.set(rightPower);
   }
-
+/*
   public void arcadeDrive_Speed(double Power, double Rotate,double Kspeed){//this is used for giving power for straight running and rotating 
     double leftPower, rightPower;
     Power = Kspeed * Power;
@@ -133,13 +127,14 @@ public double[] getCurrent(){
 
 }
 */
+/*
 public double[][] getEncoderValue(){
   double encoderPosition[] = {testmotor.getSelectedSensorPosition()};
   double encoderVelocity[] = {testmotor.getSelectedSensorPosition()};
   double encoderValue[][] = {encoderPosition, encoderVelocity};
   return encoderValue;
 }
-
+*/
 public double deathZone(double value, double zone){
     if(Math.abs(value) > zone ){
       return value;

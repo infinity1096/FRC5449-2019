@@ -12,7 +12,11 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Profiles.Profile1;
 import frc.robot.commands.Chassis.ProfileDrive;
-import frc.robot.commands.Chassis.ProfileDrive1;
+import frc.robot.commands.Intake_Holder.Shoot;
+import frc.robot.commands.PlateDispenser.Extend;
+import frc.robot.commands.PlateDispenser.PlacePlate;
+import frc.robot.commands.PlateDispenser.Release;
+import frc.robot.commands.PlateDispenser.Retract;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -27,14 +31,15 @@ public class OI {
 
   public Joystick stick0 = new Joystick(0);
   public JoystickButton button1 = new JoystickButton(stick0, 1);
-  public JoystickButton button2 = new JoystickButton(stick0, 2);
-  public JoystickButton button3 = new JoystickButton(stick0, 3);
+  public JoystickButton button2 = new JoystickButton(stick0, 3);
+  public JoystickButton button3 = new JoystickButton(stick0, 5);
   
 
   OI(){
-    button1.whenPressed(new ProfileDrive(Profile1.Points,Profile1.kNumPoints));
-    button3.whenPressed(new ProfileDrive1(Profile1.Points,Profile1.kNumPoints));
-    
+    button1.whenPressed(new PlacePlate());
+    //button2.whenPressed(new Retract());
+    //button3.whenPressed(new Extend());
+    //button1.whenPressed(new Shoot());
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

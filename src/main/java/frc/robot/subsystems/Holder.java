@@ -29,14 +29,18 @@ public class Holder extends Subsystem {
   private double Outpower;
   private double Inpower;
   
-  public void Holder(){
+  public Holder(){
+    
     UpPos = RobotMap.HOLDER_UP_POSITION;
-    DownPos = RobotMap.HOLDER_UP_POSITION;
+    DownPos = RobotMap.HOLDER_DOWN_POSITION;
     Outpower = RobotMap.HOLDER_OUT_POWER;
     Inpower = RobotMap.HOLDER_IN_POWER;
     this.shooter = new TalonSRX(RobotMap.HOLDER_SHOOTER_MOTOR_PORT);
     this.turner = new TalonSRX(RobotMap.HOLDER_TURNER_MOTOR_PORT);
     this.holdersensor = new DigitalInput(RobotMap.HOLDER_HOLDERSENSOR_IR_PORT);
+    
+    //initialize
+    turner.setSelectedSensorPosition(0);
   }
 
   public void moveToUp(){
@@ -49,6 +53,10 @@ public class Holder extends Subsystem {
     this.turner.set(ControlMode.Position, DownPos);
   }
 
+  public void move(double power){
+    this.turner.set(ControlMode.PercentOutput, power);
+  }
+
   public void shoot(){
     this.shooter.set(ControlMode.PercentOutput, Outpower);
   }
@@ -57,8 +65,16 @@ public class Holder extends Subsystem {
     this.shooter.set(ControlMode.PercentOutput, Inpower);
   }
 
+  public void stop(){
+    this.shooter.set(ControlMode.PercentOutput,0);
+  }
+
   public boolean get(){
     return this.holdersensor.get();
+  }
+
+  public double getPosition(){
+    return this.turner.getSelectedSensorPosition() * 0.3271;
   }
 
   @Override

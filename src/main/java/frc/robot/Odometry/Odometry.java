@@ -20,6 +20,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import edu.wpi.first.wpilibj.Talon;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -28,10 +30,8 @@ public class Odometry implements Runnable{
     
     private RobotStatus last = new RobotStatus();
     private double[] state;
-    private TalonSRX talon;
 
-    public Odometry(TalonSRX talon){
-        this.talon = talon;
+    public Odometry(){
 
     }
 
@@ -40,11 +40,19 @@ public class Odometry implements Runnable{
         
     }
 
-    public double[]get(){
+    public double[] get() {
         return this.state.clone();
     }
 
-    private RealVector getMeasurement() {
-        return new ArrayRealVector(new double[] { talon.getSelectedSensorPosition() });
+    private double[] getMeasurement() {
+        /*
+        double xdd,ydd,h,hd;
+        h = Math.toRadians(Robot.gyro.getAngle());
+        hd = Math.toRadians(Robot.gyro.getRate());
+        xdd = Robot.gyro.getWorldLinearAccelX();
+        ydd = Robot.gyro.getWorldLinearAccelY();
+        return new double[] {h,hd,xdd,ydd};
+        */
+        return null;
     }
 }

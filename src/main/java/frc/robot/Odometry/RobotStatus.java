@@ -11,16 +11,33 @@ package frc.robot.Odometry;
  * Add your docs here.
  */
 public class RobotStatus {
-    public double leftpos;
-    public double rightpos;
-    public double leftvel;
-    public double rightvel;
-    public double x;
-    public double y;
-    public double xaccel;
-    public double yaccel;
-    public double t;
+    public double x;//meter
+    public double y;//meter
+    public double xd;//m/s
+    public double yd;//m/s
+    public double xdd;//metes/second^2
+    public double ydd;//metes/second^2
+    public double h;//rad
+    public double hd;//rad/s
+    public double t;//update time in second
+    
     public RobotStatus(){
 
+    }
+
+    public RobotStatus(double x, double y, double xd, double yd, double xdd, double ydd, double h, double hd, double t){
+        this.x = x;
+        this.y = y;
+        this.xd = xd;
+        this.yd = yd;
+        this.xdd = xdd;
+        this.ydd = ydd;
+        this.h = h;
+        this.hd = hd;
+        this.t = t;
+    }
+
+    public RobotStatus clone(){
+        return new RobotStatus(x,y,xd,yd,xdd,ydd,h,hd,t);
     }
 }

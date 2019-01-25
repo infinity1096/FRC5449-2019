@@ -19,7 +19,7 @@ import frc.robot.subsystems.Chassis;
 
 public class TestMotionProfile extends Command {
   public TestMotionProfile() {
-    requires(Robot.chassis);
+    //requires(Robot.chassis);
   }
 
   // Called just before this Command runs the first time

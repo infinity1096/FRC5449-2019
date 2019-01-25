@@ -5,49 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Chassis;
+package frc.robot.commands.PlateDispenser;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class DefaultDrive extends Command {
-  public DefaultDrive() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.chassis);
+/**
+ * Add your docs here.
+ */
+public class Release extends Command {
+  /**
+   * Add your docs here.
+   */
+  private double timeout = 0.1;
+  private Timer timer = new Timer();
+
+  public Release() {
+    requires(Robot.platedispenser);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    timer.reset();
+    timer.start();
+    Robot.platedispenser.release();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
-    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
-
-    //Robot.chassis.arcadeDrive(0.4*inputy, -inputx*0.2);
-    
-    
   }
 
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return false;
-  }
-
-  // Called once after isFinished returns true
+  // Called once after timeout
   @Override
   protected void end() {
+    Robot.platedispenser.hold();
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
-  protected void interrupted() {
+  protected boolean isFinished() {
+    return timer.get() > timeout;
   }
 }

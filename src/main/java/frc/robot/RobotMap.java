@@ -14,6 +14,9 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
+  //Settings
+  public static boolean IS_GYRO_ENABLED = true;
+
   //motors
     //testing
     public static final int TESTING_MOTOR_PORT = 1;
@@ -21,25 +24,26 @@ public class RobotMap {
     public static final int CHASSIS_LF_MOTOR_PORT = 1;
     public static final int CHASSIS_LM_MOTOR_PORT = 2;
     public static final int CHASSIS_LR_MOTOR_PORT = 3;
-    public static final int CHASSIS_RF_MOTOR_PORT = 8;
-    public static final int CHASSIS_RM_MOTOR_PORT = 9;
-    public static final int CHASSIS_RR_MOTOR_PORT = 10;
+    public static final int CHASSIS_RF_MOTOR_PORT = 4;
+    public static final int CHASSIS_RM_MOTOR_PORT = 5;
+    public static final int CHASSIS_RR_MOTOR_PORT = 6;
     //Elevator
-    public static final int ELEVATOR_L1_MOTOR_PORT = 7;
-    public static final int ELEVATOR_L2_MOTOR_PORT = 8;
-    public static final int ELEVATOR_R1_MOTOR_PORT = 9;
-    public static final int ELEVATOR_R2_MOTOR_PORT = 10;
+    public static final int ELEVATOR_L1_MOTOR_PORT = 15;
+    public static final int ELEVATOR_L2_MOTOR_PORT = 14;
+    public static final int ELEVATOR_R1_MOTOR_PORT = 7;
+    public static final int ELEVATOR_R2_MOTOR_PORT = 8;
     //Holder
-    public static final int HOLDER_SHOOTER_MOTOR_PORT = 11;
-    public static final int HOLDER_TURNER_MOTOR_PORT = 12;
+    public static final int HOLDER_SHOOTER_MOTOR_PORT = 12;
+    public static final int HOLDER_TURNER_MOTOR_PORT = 10;
     //intake
     public static final int INTAKE_MOTOR = 11;
 //Pneumatics
   //PCM
-    public static final int PCM_PORT = 17;
+    public static final int PCM_PORT = 0;
   //Solenoid
+    public static final int ELEVATOR_DISPESER_PORT = 0;
     public static final int PLATEDISPENSER_PUSHER_SOLENOID_PORT = 1;
-    public static final int PLATEDISPENSER_HOLDER_SOLENOID_PORT = 0;
+    public static final int PLATEDISPENSER_HOLDER_SOLENOID_PORT = 2;
 
 //Sensors
   //touch sensor
@@ -49,16 +53,16 @@ public class RobotMap {
     public static final int HOLDER_HOLDERSENSOR_IR_PORT = 2;
 
 //Parameters
-  //Elevator
-  public static final long ELEVATOR_DOWN_POS = 0;
-  public static final long ELEVATOR_UP_POS = 0;//this value remains to be determined
+//Elevator
+public static final long ELEVATOR_DOWN_POS = 0;
+public static final long ELEVATOR_UP_POS = 0;//this value remains to be determined
 
-  //Holder
-    public static final double HOLDER_OUT_POWER = 1.0;
-    public static final double HOLDER_IN_POWER = 0.2;
-    public static final long HOLDER_UP_POSITION = 0;//this value remains to be determined
-    public static final long HOLDER_DOWN_POSITION = 0;//this value remains to be determined
-  //intake
-    public static final int powerIn = 1;//this value remains to be determined
-    public static final int powerOut = -1;//this value remains to be determined
+//Holder
+  public static final double HOLDER_OUT_POWER = -1.0;
+  public static final double HOLDER_IN_POWER =  0.5;
+  public static final long HOLDER_UP_POSITION = 0;//this value should be 30, 0 is just for hold its place
+  public static final long HOLDER_DOWN_POSITION = -300;
+//intake
+  public static final int powerIn = 1;//this value remains to be determined
+  public static final int powerOut = -1;//this value remains to be determined
 }

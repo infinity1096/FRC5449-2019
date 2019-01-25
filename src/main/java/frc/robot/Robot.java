@@ -7,16 +7,15 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.Odometry.Odometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Holder;
+import frc.robot.subsystems.PlateDispenser;
 
 
 
@@ -30,17 +29,14 @@ import frc.robot.subsystems.Chassis;
 
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
-  //public static PlateDispenser platedispenser = new PlateDispenser();
+  public static PlateDispenser platedispenser = new PlateDispenser();
+  public static Holder holder = new Holder();
   //public static Intake intake = new Intake();
-  //public static Holder holder = new Holder();
-  //public static Elevator elevator = new Elevator();
+  public static Elevator elevator = new Elevator();
+  //public static AHRS gyro = new AHRS(SPI.Port.kMXP);
   public static OI oi = new OI();
-  //public static Odometry om = new Odometry(chassis.lf);
-  //public static ProfileWriter pfw = new ProfileWriter();
-  //public static ProfileReader pfr = new ProfileReader();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -129,6 +125,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    elevator.clearEncoder();//Only for tests
   }
 
   /**
@@ -136,13 +133,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //chassis.testmotor.set(ControlMode.PercentOutput, 0.5);
-    //System.out.println("Position" + String.valueOf(chassis.getEncoderValue()[0][0]));
-    //System.out.println("Velocity" + String.valueOf(chassis.getEncoderValue()[1][0]));
     Scheduler.getInstance().run();
+    //elevator.move(-0.8*oi.stick0.getRawAxis(1)+0.10);
+    //SmartDashboard.putNumber("power", -0.4*oi.stick0.getRawAxis(1)+0.10);
   }
 
   /**
+   * 
    * This function is called periodically during test mode.
    */
   @Override
