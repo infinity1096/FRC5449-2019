@@ -52,10 +52,15 @@ public class RobotMap {
   //IR sensor
     public static final int HOLDER_HOLDERSENSOR_IR_PORT = 2;
 
-//Parameters
+
 //Elevator
-public static final long ELEVATOR_DOWN_POS = 0;
-public static final long ELEVATOR_UP_POS = 0;//this value remains to be determined
+  //hardware parameters
+    public static final double ELEVATOR_ENCODERUNIT_TO_METERS_COEFF = 0; //this value remains to be determined
+  //Software Parameters
+    public static final double ELEVATOR_DOWN_POS = 0;
+    public static final double ELEVATOR_MID_POS = 0;//this value remains to be determined
+    public static final double ELEVATOR_UP_POS = 0;//this value remains to be determined
+    public static final double ELEVATOR_AllOWABLE_ERROR = 0.1;//this value remains to be determined
 
 //Holder
   public static final double HOLDER_OUT_POWER = -1.0;
