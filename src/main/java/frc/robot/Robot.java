@@ -125,7 +125,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    elevator.stop();
     elevator.clearEncoder();//Only for tests
+    elevator.clearI();
   }
 
   /**
@@ -134,8 +136,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    //elevator.move(-0.8*oi.stick0.getRawAxis(1)+0.10);
-    //SmartDashboard.putNumber("power", -0.4*oi.stick0.getRawAxis(1)+0.10);
+    //elevator.move(-0.4*oi.stick0.getRawAxis(1)+0.10);
+    //SmartDashboard.putNumber("position", elevator.getPosition());
   }
 
   /**

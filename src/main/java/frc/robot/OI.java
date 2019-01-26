@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Profiles.Profile1;
 import frc.robot.commands.Chassis.ProfileDrive;
+import frc.robot.commands.Elevator.moveToDown;
+import frc.robot.commands.Elevator.moveToMid;
+import frc.robot.commands.Elevator.moveToUp;
 import frc.robot.commands.Intake_Holder.Shoot;
 import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
@@ -30,16 +33,17 @@ public class OI {
   // number it is.
 
   public Joystick stick0 = new Joystick(0);
-  public JoystickButton button1 = new JoystickButton(stick0, 1);
-  public JoystickButton button2 = new JoystickButton(stick0, 3);
-  public JoystickButton button3 = new JoystickButton(stick0, 5);
+  public JoystickButton button1 = new JoystickButton(stick0, 11);
+  public JoystickButton button2 = new JoystickButton(stick0, 9);
+  public JoystickButton button3 = new JoystickButton(stick0, 7);
   
 
   OI(){
-    button1.whenPressed(new PlacePlate());
-    //button2.whenPressed(new Retract());
-    //button3.whenPressed(new Extend());
-    //button1.whenPressed(new Shoot());
+    //button1.whenPressed(new PlacePlate());
+    button1.whenPressed(new moveToDown());
+    button2.whenPressed(new moveToMid());
+    button3.whenPressed(new moveToUp());
+
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

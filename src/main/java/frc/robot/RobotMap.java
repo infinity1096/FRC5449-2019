@@ -55,12 +55,13 @@ public class RobotMap {
 
 //Elevator
   //hardware parameters
-    public static final double ELEVATOR_ENCODERUNIT_TO_METERS_COEFF = 0; //this value remains to be determined
-  //Software Parameters
-    public static final double ELEVATOR_DOWN_POS = 0;
-    public static final double ELEVATOR_MID_POS = 0;//this value remains to be determined
-    public static final double ELEVATOR_UP_POS = 0;//this value remains to be determined
-    public static final double ELEVATOR_AllOWABLE_ERROR = 0.1;//this value remains to be determined
+    public static final double ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF = 0.0493; 
+    public static final double ELEVATOR_MILIMETERS_OFFSET = 480;
+    //Software Parameters
+    public static final double ELEVATOR_DOWN_POS = ELEVATOR_MILIMETERS_OFFSET;
+    public static final double ELEVATOR_MID_POS = 1192;//this value remains to be determined
+    public static final double ELEVATOR_UP_POS = 1902;//this value remains to be determined
+    public static final double ELEVATOR_AllOWABLE_ERROR = 10;//this value remains to be determined
 
 //Holder
   public static final double HOLDER_OUT_POWER = -1.0;
