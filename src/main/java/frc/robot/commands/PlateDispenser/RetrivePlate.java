@@ -5,31 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
-
-import com.ctre.phoenix.motion.BufferedTrajectoryPointStream;
-import com.ctre.phoenix.motion.TrajectoryPoint;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+package frc.robot.commands.PlateDispenser;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.FileReadWrite.ProfileReader;
-import frc.robot.Profiles.Profile1;
-import frc.robot.subsystems.Chassis;
 
-public class TestMotionProfile extends Command {
-  public TestMotionProfile() {
-    requires(Robot.chassis);
+public class RetrivePlate extends Command {
+  public RetrivePlate() {
+    //requires(Robot.platedispenser);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    BufferedTrajectoryPointStream stream = new BufferedTrajectoryPointStream();
-    double[][] array = Robot.pfr.getArray();
-    int count = Robot.pfr.getCount();
-    stream.Write(Robot.chassis.convertTrajectoryPoint(array,count));
-    Robot.chassis.testmotor.startMotionProfile(stream,10, ControlMode.MotionProfile);
+   //Robot.platedispenser.release();
+   // Robot.platedispenser.extend();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,12 +30,15 @@ public class TestMotionProfile extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    //return Robot.platedispenser.get()[0] && Robot.platedispenser.get()[1];
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+   //Robot.platedispenser.hold();
+    //Robot.platedispenser.retract();
   }
 
   // Called when another command which requires one or more of the same

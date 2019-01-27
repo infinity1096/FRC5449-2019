@@ -28,7 +28,7 @@ public class PlateDispenser extends Subsystem {
     this.pusher = new Solenoid(RobotMap.PLATEDISPENSER_PUSHER_SOLENOID_PORT);
     this.holder = new Solenoid(RobotMap.PLATEDISPENSER_HOLDER_SOLENOID_PORT);
     this.s1 = new DigitalInput(RobotMap.PLATEDISPENSER_S1_TOUCH_PORT);
-    this.s1 = new DigitalInput(RobotMap.PLATEDISPENSER_S2_TOUCH_PORT);
+    this.s2 = new DigitalInput(RobotMap.PLATEDISPENSER_S2_TOUCH_PORT);
   }
 
   //Basic commands
@@ -41,11 +41,11 @@ public class PlateDispenser extends Subsystem {
   }
 
   public void hold(){
-    this.holder.set(true);
+    this.holder.set(false);
   }
 
   public void release(){
-    this.holder.set(false);
+    this.holder.set(true);
   }
 
 
