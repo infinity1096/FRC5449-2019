@@ -5,44 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Chassis;
+package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class DefaultDrive extends Command {
-  public DefaultDrive() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.chassis);
+public class moveToMid extends Command {
+
+  private boolean doHold = true;
+
+  //constructers
+  public moveToMid() {
+    requires(Robot.elevator);
+    this.doHold = true;
   }
+
+  public moveToMid(boolean hold) {
+    requires(Robot.elevator);
+    this.doHold = hold;
+  } 
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.elevator.clearI();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
-    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
-
-    Robot.chassis.arcadeDrive(0.4*inputy, -inputx*0.2);
-    
-    
+    Robot.elevator.ProfileToPoosition(RobotMap.ELEVATOR_MID_POS);
   }
-
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_MID_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    if (!doHold){
+      Robot.elevator.stop();
+    }
   }
 
   // Called when another command which requires one or more of the same

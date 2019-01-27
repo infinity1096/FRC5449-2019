@@ -12,6 +12,15 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Profiles.Profile1;
 import frc.robot.commands.Chassis.ProfileDrive;
+import frc.robot.commands.Elevator.ReleaseClimber;
+import frc.robot.commands.Elevator.moveToDown;
+import frc.robot.commands.Elevator.moveToMid;
+import frc.robot.commands.Elevator.moveToUp;
+import frc.robot.commands.Intake_Holder.HolderToDown;
+import frc.robot.commands.Intake_Holder.HolderToMid;
+import frc.robot.commands.Intake_Holder.HolderToUp;
+import frc.robot.commands.Intake_Holder.IntakeBall;
+import frc.robot.commands.Intake_Holder.IntakeToHolder;
 import frc.robot.commands.Intake_Holder.Shoot;
 import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
@@ -30,16 +39,42 @@ public class OI {
   // number it is.
 
   public Joystick stick0 = new Joystick(0);
-  public JoystickButton button1 = new JoystickButton(stick0, 1);
-  public JoystickButton button2 = new JoystickButton(stick0, 3);
-  public JoystickButton button3 = new JoystickButton(stick0, 5);
-  
+
+  public JoystickButton place = new JoystickButton(stick0, 1);
+  public JoystickButton extend = new JoystickButton(stick0, 5);
+  public JoystickButton retrive = new JoystickButton(stick0, 3);
+  public JoystickButton ElevatorUp = new JoystickButton(stick0, 7);
+  public JoystickButton ElevatorMid = new JoystickButton(stick0, 9);
+  public JoystickButton ElevatorDown = new JoystickButton(stick0, 11);
+  public JoystickButton HolderUp = new JoystickButton(stick0, 8);
+  public JoystickButton HolderMid = new JoystickButton(stick0, 10);
+  public JoystickButton HolderDown = new JoystickButton(stick0, 12);
+  public JoystickButton intake = new JoystickButton(stick0, 2);
+  public JoystickButton shoot = new JoystickButton(stick0, 6);
+  public JoystickButton Releaseclimber = new JoystickButton(stick0, 4);
 
   OI(){
-    button1.whenPressed(new PlacePlate());
-    //button2.whenPressed(new Retract());
-    //button3.whenPressed(new Extend());
-    //button1.whenPressed(new Shoot());
+
+    //test joystick
+    ElevatorUp.whenPressed(new moveToUp());
+    ElevatorMid.whenPressed(new moveToMid());
+    ElevatorDown.whenPressed(new moveToDown());
+    HolderUp.whenPressed(new HolderToUp());
+    HolderMid.whenPressed(new HolderToMid());
+    HolderDown.whenPressed(new HolderToDown());    
+    place.whenPressed(new PlacePlate());
+    extend.whenPressed(new Extend());
+    retrive.whenPressed(new Retract());
+    intake.whenPressed(new IntakeBall());
+    Releaseclimber.whenPressed(new ReleaseClimber());
+    shoot.whenPressed(new Shoot());
+    //button1.whenPressed(new PlacePlate());    
+    //button1.whenPressed(new moveToDown());
+    //button2.whenPressed(new moveToMid());
+    //button3.whenPressed(new moveToUp());
+    
+    //intake.whenPressed(new IntakeBall());
+    
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

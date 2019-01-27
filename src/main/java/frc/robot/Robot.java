@@ -7,15 +7,23 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.UsbCameraInfo;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.Intake_Holder.CalibrateHolder;
+import frc.robot.commands.Intake_Holder.HolderToDown;
+import frc.robot.commands.Intake_Holder.HolderToUp;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Holder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PlateDispenser;
+import frc.robot.subsystems.Pusher;
 
 
 
@@ -31,8 +39,9 @@ public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
   public static PlateDispenser platedispenser = new PlateDispenser();
   public static Holder holder = new Holder();
-  //public static Intake intake = new Intake();
+  public static Intake intake = new Intake();
   public static Elevator elevator = new Elevator();
+  public static Pusher pusher = new Pusher();
   //public static AHRS gyro = new AHRS(SPI.Port.kMXP);
   public static OI oi = new OI();
   Command m_autonomousCommand;
@@ -43,6 +52,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    CameraServer.getInstance().startAutomaticCapture();
     /*
     Timer timer = new Timer();
     timer.reset();
@@ -125,17 +135,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    elevator.stop();
     elevator.clearEncoder();//Only for tests
+    elevator.clearI();
+    new CalibrateHolder().start();
   }
 
   /**
    * This function is called periodically during operator control.
    */
+
+  boolean is_last_hold = false;
+  boolean is_on = false;
+
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    //elevator.move(-0.8*oi.stick0.getRawAxis(1)+0.10);
-    //SmartDashboard.putNumber("power", -0.4*oi.stick0.getRawAxis(1)+0.10);
+    SmartDashboard.putNumber("Current", holder.getShooterCurrent());
   }
 
   /**

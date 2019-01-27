@@ -37,46 +37,68 @@ public class Elevator extends Subsystem {
     l2.setInverted(false);
     r1.setInverted(false);
     r2.setInverted(true);
-
+   
     //set feedback sensor
     r2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     r2.setSelectedSensorPosition(0);
+    r2.configSelectedFeedbackCoefficient(RobotMap.ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF);
   }
 
-  public void clearEncoder(){
-    r2.setSelectedSensorPosition(0);
-  }
 
+  //climber supporter holder
   public void Release(){
-    this.holder.set(false);
-  }
-
-  public void Retract(){
     this.holder.set(true);
   }
 
+  public void Retract(){
+    this.holder.set(false);
+  }
+  //basic move
   public void move(double input){
     r2.set(ControlMode.PercentOutput,input);
   }
-  /*
-  public double[] get(){
-    double[] results={0,0};
-    results[0]=l1.getSelectedSensorPosition();
-    results[1]=l1.getSelectedSensorVelocity();
-    return results;
+
+  public void stop(){
+    r2.set(ControlMode.PercentOutput,0);
+  }
+  
+  //Advanced move
+  public void movetoposition(double input){
+    input = input - RobotMap.ELEVATOR_MILIMETERS_OFFSET;
+    r2.selectProfileSlot(1, 0);
+    r2.set(ControlMode.Position,input);
   }
 
-  public void movetoposition(double input){
-    l1.selectProfileSlot(1, 0);
-    l1.set(ControlMode.Position,input);
+  public void ProfileToPoosition(double position){
+    position = position - RobotMap.ELEVATOR_MILIMETERS_OFFSET;
+    r2.selectProfileSlot(2, 0);
+    r2.set(ControlMode.MotionMagic, position);
   }
-  public double[] getoutput(){
+
+  //get sensor readings
+  public double[] getOutput(){
     double[] results={0,0};
     results[0]=l1.getOutputCurrent()+l2.getOutputCurrent();
     results[1]=r1.getOutputCurrent()+r2.getOutputCurrent();
     return results;
   }
-  */
+
+  public double getPosition(){
+    double results=0;
+    results=r2.getSelectedSensorPosition();
+    results = results + RobotMap.ELEVATOR_MILIMETERS_OFFSET;
+    return results;
+  }
+
+  //reset commands
+  public void clearEncoder(){
+    r2.setSelectedSensorPosition(0);
+  }
+
+  public void clearI(){
+    r2.setIntegralAccumulator(0);
+  }
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
