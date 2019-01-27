@@ -7,19 +7,24 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.UsbCameraInfo;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.FileReadWrite.ProfileReader;
-import frc.robot.FileReadWrite.ProfileWriter;
-import frc.robot.Profiles.Profile1;
+import frc.robot.commands.Intake_Holder.CalibrateHolder;
+import frc.robot.commands.Intake_Holder.HolderToDown;
+import frc.robot.commands.Intake_Holder.HolderToUp;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Holder;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PlateDispenser;
+import frc.robot.subsystems.Pusher;
+
 
 
 /**
@@ -33,18 +38,22 @@ import frc.robot.subsystems.PlateDispenser;
 public class Robot extends TimedRobot {
   public static Chassis chassis = new Chassis();
   public static PlateDispenser platedispenser = new PlateDispenser();
+  public static Holder holder = new Holder();
+  public static Intake intake = new Intake();
+  public static Elevator elevator = new Elevator();
+  public static Pusher pusher = new Pusher();
+  //public static AHRS gyro = new AHRS(SPI.Port.kMXP);
   public static OI oi = new OI();
-  public static ProfileWriter pfw = new ProfileWriter();
-  public static ProfileReader pfr = new ProfileReader();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    CameraServer.getInstance().startAutomaticCapture();
+    /*
     Timer timer = new Timer();
     timer.reset();
     timer.start();
@@ -56,6 +65,10 @@ public class Robot extends TimedRobot {
     System.out.println("Time" + String.valueOf(timer.get()));
     System.out.println("Count" + String.valueOf(pfr.getCount()));
     SmartDashboard.putData("Auto mode", m_chooser);
+    */
+    //Notifier notifier = new Notifier(om);
+    //notifier.startPeriodic(0.02);
+
   }
 
   /**
@@ -122,25 +135,27 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    double [][] array = pfr.getArray();
-    int count = pfr.getCount();
-    pfw.SetAddress("home/lvuser/frc/Profile2.csv");
-    pfw.loadBuffer(array, count);
-    new Thread(pfw).start();
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    elevator.stop();
+    elevator.clearEncoder();//Only for tests
+    elevator.clearI();
+    new CalibrateHolder().start();
   }
 
   /**
    * This function is called periodically during operator control.
    */
+
+  boolean is_last_hold = false;
+  boolean is_on = false;
+
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Current", holder.getShooterCurrent());
   }
 
   /**
+   * 
    * This function is called periodically during test mode.
    */
   @Override
