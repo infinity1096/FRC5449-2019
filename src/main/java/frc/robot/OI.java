@@ -20,7 +20,6 @@ import frc.robot.commands.Intake_Holder.HolderToDown;
 import frc.robot.commands.Intake_Holder.HolderToMid;
 import frc.robot.commands.Intake_Holder.HolderToUp;
 import frc.robot.commands.Intake_Holder.IntakeBall;
-import frc.robot.commands.Intake_Holder.IntakeToHolder;
 import frc.robot.commands.Intake_Holder.Shoot;
 import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
@@ -63,8 +62,8 @@ public class OI {
     HolderMid.whenPressed(new HolderToMid());
     HolderDown.whenPressed(new HolderToDown());    
     place.whenPressed(new PlacePlate());
-    extend.whenPressed(new Extend());
-    retrive.whenPressed(new Retract());
+    //extend.whenPressed(new Extend());
+    //retrive.whenPressed(new Retract());
     intake.whenPressed(new IntakeBall());
     Releaseclimber.whenPressed(new ReleaseClimber());
     shoot.whenPressed(new Shoot());

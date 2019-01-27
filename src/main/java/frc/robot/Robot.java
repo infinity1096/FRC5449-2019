@@ -152,6 +152,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     SmartDashboard.putNumber("Current", holder.getShooterCurrent());
+    if (oi.extend.get()){
+      pusher.move(0.4);
+    }else if (oi.retrive.get()){
+      pusher.move(-0.2);
+    }else{
+      pusher.move(0);
+    }
   }
 
   /**
