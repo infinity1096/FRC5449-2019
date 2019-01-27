@@ -7,20 +7,38 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
 public class Pusher extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  public Pusher(){
+  private TalonSRX pusher_lt = new TalonSRX(RobotMap.PUSHER_MOTOR_LEFT_PORT);
+  private TalonSRX pusher_rt = new TalonSRX(RobotMap.PUSHER_MOTOR_RIGHT_PORT);
 
+  private double maximumPower = RobotMap.PUSHER_POWER_MAXIMUM;
+  private double minimumPower = RobotMap.PUSHER_POWER_MINIMUM;
+
+  public Pusher(){
+    pusher_lt.follow(pusher_rt);
   }
 
+  public void pusherIn(){
+    pusher_lt.set(ControlMode.PercentOutput, minimumPower);
+
+  }
+  public void pusherOut(){
+    pusher_lt.set(ControlMode.PercentOutput, maximumPower);
+    
+  }
+  public double getPusherValue(){
+      return 0.1;
+  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
