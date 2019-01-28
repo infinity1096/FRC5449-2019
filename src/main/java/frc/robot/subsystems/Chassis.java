@@ -11,6 +11,7 @@ import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.Chassis.DefaultDrive;
@@ -24,6 +25,9 @@ public class Chassis extends Subsystem {
   private CANSparkMax rm = new CANSparkMax(RobotMap.CHASSIS_RM_MOTOR_PORT,MotorType.kBrushless);
   private CANSparkMax rr = new CANSparkMax(RobotMap.CHASSIS_RR_MOTOR_PORT,MotorType.kBrushless);
   
+  private Encoder encoderl  = new Encoder(RobotMap.CHASSIS_ENCODERL_PORT_A, RobotMap.CHASSIS_ENCODERL_PORT_B);
+  private Encoder encoderr  = new Encoder(RobotMap.CHASSIS_ENCODERR_PORT_A, RobotMap.CHASSIS_ENCODERR_PORT_B);
+
   public Chassis(){
     
 
@@ -37,7 +41,11 @@ public class Chassis extends Subsystem {
     rf.setInverted(true);
     rm.setInverted(true);
     rr.setInverted(true);
-    
+
+    encoderl.setReverseDirection(true);
+    encoderr.setReverseDirection(false);
+    encoderl.reset();
+    encoderr.reset();
   }
   
   public static TrajectoryPoint[] convertTrajectoryPoint(double[][] profile, int totalCount){
@@ -110,15 +118,16 @@ public class Chassis extends Subsystem {
 public void update(){
 
 }
-  
+  */
 public double[][] getEncoderValue(){
-    double encoderPosition[] = {lf.getSelectedSensorPosition(), rf.getSelectedSensorPosition()};
-    double encoderVelocity[] = {lf.getSelectedSensorVelocity(), rf.getSelectedSensorVelocity()};
+    double coeff = RobotMap.CHASSIS_ENCUNIT2METERS_COEFF;
+    double encoderPosition[] = {encoderl.getDistance() * coeff, encoderr.getDistance() * coeff};
+    double encoderVelocity[] = {encoderl.getRate() * coeff, encoderr.getRate() * coeff};
     double encoderValue[][] = {encoderPosition, encoderVelocity};
 
     return encoderValue;
 }
-
+/*
 public double[] getCurrent(){
   double[] results = {0,0};
   results[0] = lf.getOutputCurrent() + lm.getOutputCurrent() + lr.getOutputCurrent();

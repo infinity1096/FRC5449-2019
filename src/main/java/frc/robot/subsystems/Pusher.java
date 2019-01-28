@@ -26,6 +26,8 @@ public class Pusher extends Subsystem {
   TalonSRX pusherl;
   TalonSRX pusherr;
 
+  private boolean is_calibrated = false;
+
   public Pusher(){
     pusherl = new TalonSRX(RobotMap.PUSHER_L_PORT);
     pusherr = new TalonSRX(RobotMap.PUSHER_R_PORT);
@@ -42,27 +44,82 @@ public class Pusher extends Subsystem {
     pusherl.configSelectedFeedbackCoefficient(RobotMap.PUSHER_ENCODERUNIT_TO_MM_COEFF);
     pusherr.configSelectedFeedbackCoefficient(RobotMap.PUSHER_ENCODERUNIT_TO_MM_COEFF);
 
+    is_calibrated = false;
   }
 
-  public void pusherIn(){
-    pusher_lt.set(ControlMode.PercentOutput, minimumPower);
 
-  }
-  public void pusherOut(){
-    pusher_lt.set(ControlMode.PercentOutput, maximumPower);
-    
-  }
-  public double getPusherValue(){
-      return 0.1;
-  }
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public double[] getPosition(){
+    double results[] = {0,0};
+    results[0] = this.pusherl.getSelectedSensorPosition();
+    results[1] = this.pusherr.getSelectedSensorPosition();
+    return results;
+  }
+
+  public double[] getCurrent(){
+    double[]results = {0,0};
+    results[0] = this.pusherl.getOutputCurrent();
+    results[1] = this.pusherr.getOutputCurrent();
+    return results;
+  }
+
+  public void moveTo(double Position){
+    pusherl.selectProfileSlot(1, 0);
+    pusherr.selectProfileSlot(1, 0);
+
+    pusherl.set(ControlMode.Position, Position);
+    pusherr.set(ControlMode.Position, Position);
+  }
+
+  public void profileTo(double Position){
+    pusherl.selectProfileSlot(2, 0);
+    pusherr.selectProfileSlot(2, 0);
+
+    pusherl.set(ControlMode.MotionMagic, Position);
+    pusherr.set(ControlMode.MotionMagic, Position);
+  }
+
+  public void moveOut(){
+    this.profileTo(RobotMap.PUSHER_OUT_POSITION);
+  }
+
+  public void moveIn(){
+    this.profileTo(RobotMap.PUSHER_IN_POSITION);
+  }
+
   public void move(double power){
     pusherl.set(ControlMode.PercentOutput, power);
     pusherr.set(ControlMode.PercentOutput, power);
   }
+
+  public void reset(){
+    this.pusherl.setSelectedSensorPosition(0);
+    this.pusherr.setSelectedSensorPosition(0);
+  }
+
+  public void resetl(){
+    this.pusherl.setSelectedSensorPosition(0);
+  }
+
+  public void resetr(){
+    this.pusherr.setSelectedSensorPosition(0);
+  }
+    
+  public void calibrated(){
+    this.is_calibrated = true;
+  }
+
+  public void movel(double power){
+    pusherl.set(ControlMode.PercentOutput, power);
+  }
+
+  public void mover(double power){
+    pusherr.set(ControlMode.PercentOutput, power);
+  }
+
 }

@@ -27,6 +27,12 @@ public class RobotMap {
     public static final int CHASSIS_RF_MOTOR_PORT = 4;
     public static final int CHASSIS_RM_MOTOR_PORT = 5;
     public static final int CHASSIS_RR_MOTOR_PORT = 6;
+
+    public static final int CHASSIS_ENCODERL_PORT_A = 6;
+    public static final int CHASSIS_ENCODERL_PORT_B = 7;
+
+    public static final int CHASSIS_ENCODERR_PORT_A = 8;
+    public static final int CHASSIS_ENCODERR_PORT_B = 9;
     //Elevator
     public static final int ELEVATOR_L1_MOTOR_PORT = 15;
     public static final int ELEVATOR_L2_MOTOR_PORT = 14;
@@ -55,6 +61,9 @@ public class RobotMap {
   //IR sensor
     public static final int HOLDER_HOLDERSENSOR_IR_PORT = 2;
 
+
+//Chassis
+  public static final double CHASSIS_ENCUNIT2METERS_COEFF = 3.2867e-4;
 
 //Elevator
   //hardware parameters
@@ -91,6 +100,14 @@ public class RobotMap {
   
 
 //pusher
+  //hardware parameters
   public static final double PUSHER_ENCODERUNIT_TO_MM_COEFF = 0.4215;//mm
+  //software parameters
+  public static final double PUSHER_IN_POSITION = 0;
+  public static final double PUSHER_OUT_POSITION = 600;
+  public static final double PUSHER_ALLOWABLE_ERROR = 5;
+  public static final double PUSHER_CALIBRATION_AMP_THRESHOLD = 0.75;//Amp
+  public static final double PUSHER_CALIBRATION_ACCUM_THRESHOLD = 0.2;//Amp * sec
+
 
 }

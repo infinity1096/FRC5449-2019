@@ -25,6 +25,8 @@ import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
 import frc.robot.commands.PlateDispenser.Release;
 import frc.robot.commands.PlateDispenser.Retract;
+import frc.robot.commands.Pusher.PusherIn;
+import frc.robot.commands.Pusher.PusherOut;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -62,8 +64,8 @@ public class OI {
     HolderMid.whenPressed(new HolderToMid());
     HolderDown.whenPressed(new HolderToDown());    
     place.whenPressed(new PlacePlate());
-    //extend.whenPressed(new Extend());
-    //retrive.whenPressed(new Retract());
+    extend.whenPressed(new PusherOut());
+    retrive.whenPressed(new PusherIn());
     intake.whenPressed(new IntakeBall());
     Releaseclimber.whenPressed(new ReleaseClimber());
     shoot.whenPressed(new Shoot());

@@ -7,17 +7,23 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.UsbCameraInfo;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Odometry.Odometry;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
 import frc.robot.commands.Intake_Holder.HolderToDown;
 import frc.robot.commands.Intake_Holder.HolderToUp;
+import frc.robot.commands.Pusher.CalibratePusher;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Holder;
@@ -42,8 +48,10 @@ public class Robot extends TimedRobot {
   public static Intake intake = new Intake();
   public static Elevator elevator = new Elevator();
   public static Pusher pusher = new Pusher();
-  //public static AHRS gyro = new AHRS(SPI.Port.kMXP);
+  public static AHRS gyro = new AHRS(Port.kMXP);
   public static OI oi = new OI();
+  Odometry odometry;
+  Notifier odometry_notifier;
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   /**
@@ -53,6 +61,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     CameraServer.getInstance().startAutomaticCapture();
+
     /*
     Timer timer = new Timer();
     timer.reset();
@@ -90,6 +99,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    if (odometry_notifier != null){
+      this.odometry_notifier.stop();
+    }
   }
 
   @Override
@@ -139,6 +151,9 @@ public class Robot extends TimedRobot {
     elevator.clearEncoder();//Only for tests
     elevator.clearI();
     new CalibrateHolder().start();
+    odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
+    odometry_notifier = new Notifier(odometry);
+    odometry_notifier.startPeriodic(0.02);
   }
 
   /**
@@ -151,14 +166,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putNumber("Current", holder.getShooterCurrent());
-    if (oi.extend.get()){
-      pusher.move(0.4);
-    }else if (oi.retrive.get()){
-      pusher.move(-0.2);
-    }else{
-      pusher.move(0);
-    }
+
+    SmartDashboard.putData(new CalibratePusher());
+
+    double heading = (Math.toRadians(-gyro.getYaw()) + Math.PI/2);
+    heading = Math.atan2(Math.sin(heading),Math.cos(heading));
+    System.out.println("X:" + String.valueOf(odometry.get()[0]) + "\t" + "Y:" + String.valueOf(odometry.get()[1]));
   }
 
   /**
