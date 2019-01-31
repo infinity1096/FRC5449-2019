@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -22,6 +23,7 @@ import frc.robot.RobotMap;
 public class Pusher extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
 
   TalonSRX pusherl;
   TalonSRX pusherr;
@@ -45,6 +47,7 @@ public class Pusher extends Subsystem {
     pusherr.configSelectedFeedbackCoefficient(RobotMap.PUSHER_ENCODERUNIT_TO_MM_COEFF);
 
     is_calibrated = false;
+
   }
 
 
@@ -53,6 +56,7 @@ public class Pusher extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
+
 
   public double[] getPosition(){
     double results[] = {0,0};
@@ -92,10 +96,12 @@ public class Pusher extends Subsystem {
     this.profileTo(RobotMap.PUSHER_IN_POSITION);
   }
 
+
   public void move(double power){
     pusherl.set(ControlMode.PercentOutput, power);
     pusherr.set(ControlMode.PercentOutput, power);
   }
+
 
   public void reset(){
     this.pusherl.setSelectedSensorPosition(0);
@@ -121,5 +127,6 @@ public class Pusher extends Subsystem {
   public void mover(double power){
     pusherr.set(ControlMode.PercentOutput, power);
   }
+
 
 }

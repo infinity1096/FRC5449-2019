@@ -62,6 +62,7 @@ public class RobotMap {
     public static final int HOLDER_HOLDERSENSOR_IR_PORT = 2;
 
 
+
 //Chassis
   //hardware parameters
   public static final double CHASSIS_ENCUNIT2METERS_COEFF = 3.2867e-4;
@@ -69,6 +70,7 @@ public class RobotMap {
   public static final double CHASSIS_POSDRIVE_KP = 0.1;//KP > 0
   public static final double CHASSIS_POSDRIVE_KA = 0.3;//KA - KP > 0
   public static final double CHASSIS_POSDRIVE_KB = -0.2;//KB < 0
+
 //Elevator
   //hardware parameters
     public static final double ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF = 0.0493; 
@@ -86,7 +88,6 @@ public class RobotMap {
   //Software Parameters
     public static final double HOLDER_OUT_POWER = -1.0;
     public static final double HOLDER_IN_POWER =  0.5;
-
     public static final long HOLDER_UP_POSITION = 20;
     public static final long HOLDER_MID_POSITION = 0;
     public static final long HOLDER_DOWN_POSITION = -90;
@@ -115,3 +116,4 @@ public class RobotMap {
 
 
 }
+

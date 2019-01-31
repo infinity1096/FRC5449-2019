@@ -38,6 +38,7 @@ public class Holder extends Subsystem {
     turner.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     turner.setSelectedSensorPosition(0);
     turner.configSelectedFeedbackCoefficient(RobotMap.HOLDER_ENCODERUNIT_TO_DEG_COEFF);
+
     this.is_calibrated = false;
   }
 
@@ -76,6 +77,7 @@ public class Holder extends Subsystem {
     this.shooter.set(ControlMode.PercentOutput,0);
   }
 
+
   public void calibrated(){
     this.is_calibrated = true;
   }
@@ -94,6 +96,7 @@ public class Holder extends Subsystem {
   public double getPosition(){
     return this.turner.getSelectedSensorPosition();
   }
+
 
   public double getSpeed(){
     return this.turner.getSelectedSensorVelocity();

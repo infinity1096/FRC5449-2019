@@ -41,6 +41,7 @@ public class OI {
 
   public Joystick stick0 = new Joystick(0);
 
+
   public JoystickButton place = new JoystickButton(stick0, 1);
   public JoystickButton extend = new JoystickButton(stick0, 5);
   public JoystickButton retrive = new JoystickButton(stick0, 3);
@@ -76,6 +77,7 @@ public class OI {
     
     //intake.whenPressed(new IntakeBall());
     
+
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

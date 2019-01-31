@@ -7,8 +7,8 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.UsbCameraInfo;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
   public static Intake intake = new Intake();
   public static Elevator elevator = new Elevator();
   public static Pusher pusher = new Pusher();
+
   public static AHRS gyro = new AHRS(Port.kMXP);
   public static OI oi = new OI();
   
@@ -152,6 +153,7 @@ public class Robot extends TimedRobot {
     elevator.stop();
     elevator.clearEncoder();//Only for tests
     elevator.clearI();
+
     new CalibrateHolder().start();
     this.gyro.reset();
     odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
@@ -170,6 +172,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
+
     SmartDashboard.putData(new CalibratePusher());
     SmartDashboard.putData("Pos_drive_for",new PosDrive(2.1, 2.3, -Math.PI*2/3));
     SmartDashboard.putData("Pos_drive_back",new PosDrive(0, 0, Math.PI/2));
@@ -177,6 +180,7 @@ public class Robot extends TimedRobot {
     heading = Math.atan2(Math.sin(heading),Math.cos(heading));
     SmartDashboard.putNumber("X:",odometry.get()[0]);
     SmartDashboard.putNumber("Y:",odometry.get()[1]);
+
   }
 
   /**

@@ -67,6 +67,7 @@ public class Elevator extends Subsystem {
     input = input - RobotMap.ELEVATOR_MILIMETERS_OFFSET;
     r2.selectProfileSlot(1, 0);
     r2.set(ControlMode.Position,input);
+
   }
 
   public void ProfileToPoosition(double position){
@@ -74,6 +75,7 @@ public class Elevator extends Subsystem {
     r2.selectProfileSlot(2, 0);
     r2.set(ControlMode.MotionMagic, position);
   }
+
 
   //get sensor readings
   public double[] getOutput(){
