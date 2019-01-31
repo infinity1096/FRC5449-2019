@@ -37,6 +37,9 @@ public class RobotMap {
     public static final int HOLDER_TURNER_MOTOR_PORT = 10;
     //intake
     public static final int INTAKE_MOTOR = 11;
+    //pusher
+    public static final int PUSHER_L_PORT = 13;
+    public static final int PUSHER_R_PORT = 9;
 //Pneumatics
   //PCM
     public static final int PCM_PORT = 0;
@@ -57,18 +60,29 @@ public class RobotMap {
   //hardware parameters
     public static final double ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF = 0.0493; 
     public static final double ELEVATOR_MILIMETERS_OFFSET = 480;
-    //Software Parameters
+  //Software Parameters
     public static final double ELEVATOR_DOWN_POS = ELEVATOR_MILIMETERS_OFFSET;
     public static final double ELEVATOR_MID_POS = 1192;//this value remains to be determined
     public static final double ELEVATOR_UP_POS = 1902;//this value remains to be determined
     public static final double ELEVATOR_AllOWABLE_ERROR = 10;//this value remains to be determined
 
 //Holder
-  public static final double HOLDER_OUT_POWER = -1.0;
-  public static final double HOLDER_IN_POWER =  0.5;
-  public static final long HOLDER_UP_POSITION = 0;//this value should be 30, 0 is just for hold its place
-  public static final long HOLDER_DOWN_POSITION = -300;
+  //hardware Parameters
+    public static final double HOLDER_ENCODERUNIT_TO_DEG_COEFF = 0.3271;
+    public static final int HOLDER_CALIBRATE_OFFSET = -106;
+  //Software Parameters
+    public static final double HOLDER_OUT_POWER = -1.0;
+    public static final double HOLDER_IN_POWER =  0.5;
+    public static final long HOLDER_UP_POSITION = 20;
+    public static final long HOLDER_DOWN_POSITION = -90;
+    public static final double HOLDER_ALLOWABLE_ERROR = 3;
+    public static final double HOLDER_CALIBRATION_AMP_THRESHOLD = 2.0;//Amp
+    public static final double HOLDER_CALIBRATION_ACCUM_THRESHOLD = 0.25;//Amp * sec
 //intake
-  public static final int powerIn = 1;//this value remains to be determined
-  public static final int powerOut = -1;//this value remains to be determined
+  public static final double powerIn = -1;//this value remains to be determined
+  public static final double powerOut = 0.5;//this value remains to be determined
+
+//pusher
+  public static final double PUSHER_ENCODERUNIT_TO_MM_COEFF = 0.4215;//mm
+
 }

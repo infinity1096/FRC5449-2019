@@ -15,6 +15,8 @@ import frc.robot.commands.Chassis.ProfileDrive;
 import frc.robot.commands.Elevator.moveToDown;
 import frc.robot.commands.Elevator.moveToMid;
 import frc.robot.commands.Elevator.moveToUp;
+import frc.robot.commands.Intake_Holder.IntakeBall;
+import frc.robot.commands.Intake_Holder.IntakeToHolder;
 import frc.robot.commands.Intake_Holder.Shoot;
 import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
@@ -33,17 +35,28 @@ public class OI {
   // number it is.
 
   public Joystick stick0 = new Joystick(0);
+
+  //public JoystickButton place = new JoystickButton(stick0, 1);
+  //public JoystickButton extend = new JoystickButton(stick0, 5);
+  //public JoystickButton retrive = new JoystickButton(stick0, 3)
   public JoystickButton button1 = new JoystickButton(stick0, 11);
   public JoystickButton button2 = new JoystickButton(stick0, 9);
   public JoystickButton button3 = new JoystickButton(stick0, 7);
+  //public JoystickButton intake = new JoystickButton(stick0, 2);
   
 
   OI(){
     //button1.whenPressed(new PlacePlate());
-    button1.whenPressed(new moveToDown());
-    button2.whenPressed(new moveToMid());
-    button3.whenPressed(new moveToUp());
-
+    
+    //button1.whenPressed(new moveToDown());
+    //button2.whenPressed(new moveToMid());
+    //button3.whenPressed(new moveToUp());
+    /*
+    place.whenPressed(new PlacePlate());
+    extend.whenPressed(new Extend());
+    retrive.whenPressed(new Retract());
+    intake.whenPressed(new IntakeBall());
+    */
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -23,40 +24,40 @@ public class Holder extends Subsystem {
 
   private TalonSRX shooter;
   private TalonSRX turner;
-  private DigitalInput holdersensor;
-  private long UpPos;
-  private long DownPos;
   private double Outpower;
   private double Inpower;
   
   public Holder(){
-    
-    UpPos = RobotMap.HOLDER_UP_POSITION;
-    DownPos = RobotMap.HOLDER_DOWN_POSITION;
     Outpower = RobotMap.HOLDER_OUT_POWER;
     Inpower = RobotMap.HOLDER_IN_POWER;
     this.shooter = new TalonSRX(RobotMap.HOLDER_SHOOTER_MOTOR_PORT);
     this.turner = new TalonSRX(RobotMap.HOLDER_TURNER_MOTOR_PORT);
-    this.holdersensor = new DigitalInput(RobotMap.HOLDER_HOLDERSENSOR_IR_PORT);
-    
+
     //initialize
+    turner.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     turner.setSelectedSensorPosition(0);
+    turner.configSelectedFeedbackCoefficient(RobotMap.HOLDER_ENCODERUNIT_TO_DEG_COEFF);
   }
 
-  public void moveToUp(){
+  public void moveToPos(double pos){
     this.turner.selectProfileSlot(1, 0);
-    this.turner.set(ControlMode.Position, UpPos);
+    this.turner.set(ControlMode.Position, pos);
   }
-  
-  public void moveToDown(){
-    this.turner.selectProfileSlot(1, 0);
-    this.turner.set(ControlMode.Position, DownPos);
+
+  public void profileMove(double pos){
+    this.turner.selectProfileSlot(2, 0);
+    this.turner.set(ControlMode.MotionMagic, pos);
   }
 
   public void move(double power){
     this.turner.set(ControlMode.PercentOutput, power);
   }
 
+  public void stopHolder(){
+    this.turner.set(ControlMode.PercentOutput,0);
+  }
+
+  //shooter command
   public void shoot(){
     this.shooter.set(ControlMode.PercentOutput, Outpower);
   }
@@ -69,12 +70,25 @@ public class Holder extends Subsystem {
     this.shooter.set(ControlMode.PercentOutput,0);
   }
 
-  public boolean get(){
-    return this.holdersensor.get();
+
+
+  //get command
+
+  public double getHolderCurrent(){
+    return this.turner.getOutputCurrent();
   }
 
   public double getPosition(){
-    return this.turner.getSelectedSensorPosition() * 0.3271;
+    return this.turner.getSelectedSensorPosition();
+  }
+
+  //reset command
+  public void resetEncoder(){
+    this.turner.setSelectedSensorPosition(0);
+  }
+
+  public void resetEncoder(int val){
+    this.turner.setSelectedSensorPosition(val);
   }
 
   @Override
