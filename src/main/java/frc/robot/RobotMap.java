@@ -63,8 +63,12 @@ public class RobotMap {
 
 
 //Chassis
+  //hardware parameters
   public static final double CHASSIS_ENCUNIT2METERS_COEFF = 3.2867e-4;
-
+  //software parameters
+  public static final double CHASSIS_POSDRIVE_KP = 0.1;//KP > 0
+  public static final double CHASSIS_POSDRIVE_KA = 0.3;//KA - KP > 0
+  public static final double CHASSIS_POSDRIVE_KB = -0.2;//KB < 0
 //Elevator
   //hardware parameters
     public static final double ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF = 0.0493; 

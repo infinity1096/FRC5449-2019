@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Odometry.Odometry;
+import frc.robot.commands.Chassis.PosDrive;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
 import frc.robot.commands.Intake_Holder.HolderToDown;
 import frc.robot.commands.Intake_Holder.HolderToUp;
@@ -50,7 +51,8 @@ public class Robot extends TimedRobot {
   public static Pusher pusher = new Pusher();
   public static AHRS gyro = new AHRS(Port.kMXP);
   public static OI oi = new OI();
-  Odometry odometry;
+  
+  public static Odometry odometry;
   Notifier odometry_notifier;
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -151,6 +153,7 @@ public class Robot extends TimedRobot {
     elevator.clearEncoder();//Only for tests
     elevator.clearI();
     new CalibrateHolder().start();
+    this.gyro.reset();
     odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
     odometry_notifier = new Notifier(odometry);
     odometry_notifier.startPeriodic(0.02);
@@ -168,10 +171,12 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
 
     SmartDashboard.putData(new CalibratePusher());
-
+    SmartDashboard.putData("Pos_drive_for",new PosDrive(2.1, 2.3, -Math.PI*2/3));
+    SmartDashboard.putData("Pos_drive_back",new PosDrive(0, 0, Math.PI/2));
     double heading = (Math.toRadians(-gyro.getYaw()) + Math.PI/2);
     heading = Math.atan2(Math.sin(heading),Math.cos(heading));
-    System.out.println("X:" + String.valueOf(odometry.get()[0]) + "\t" + "Y:" + String.valueOf(odometry.get()[1]));
+    SmartDashboard.putNumber("X:",odometry.get()[0]);
+    SmartDashboard.putNumber("Y:",odometry.get()[1]);
   }
 
   /**

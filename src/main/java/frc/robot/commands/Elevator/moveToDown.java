@@ -35,13 +35,13 @@ public class moveToDown extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_DOWN_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    return false && Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_DOWN_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-      Robot.elevator.stop();
+      //Robot.elevator.stop();
   }
 
   // Called when another command which requires one or more of the same

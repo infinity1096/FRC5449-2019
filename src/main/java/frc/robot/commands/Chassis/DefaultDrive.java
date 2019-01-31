@@ -28,7 +28,15 @@ public class DefaultDrive extends Command {
     double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
     double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
 
-    Robot.chassis.arcadeDrive(0.4*inputy, -inputx*0.2);
+    if (inputy > 0.1){
+      inputy = (inputy - 0.1) * 1/0.9;
+    }else if(inputy < -0.1){
+      inputy = (inputy + 0.1) * 1/0.9;
+    }else{
+      inputy = 0;
+    }
+
+    Robot.chassis.arcadeDrive(-0.4*inputy, -inputx*0.2);
     
     
   }

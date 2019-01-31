@@ -49,7 +49,7 @@ public class Odometry implements Runnable{
     public void run(){
         double[] encoderval = Robot.chassis.getEncoderValue()[0];
         double [] measurement = getMeasurement();
-        //compute delta based on encoders
+        //compute delta based on encoders, respect to robot
         double[] delta_encoder = {0,0};
         delta_encoder[0] = encoderval[0] - encoderl_last;
         delta_encoder[1] = encoderval[1] - encoderr_last;
@@ -63,6 +63,8 @@ public class Odometry implements Runnable{
         heading = Math.atan2(Math.sin(heading),Math.cos(heading));
         double[][] transf_d = {{Math.cos(heading),Math.sin(heading)},{-Math.sin(heading),Math.cos(heading)}};
         RealMatrix transf = MatrixUtils.createRealMatrix(transf_d);
+
+        //apply the transformation and update X,Y
         RealVector delta_U = transf.preMultiply(delta);
         Position = Position.add(delta_U);
     }

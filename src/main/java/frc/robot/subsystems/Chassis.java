@@ -35,12 +35,14 @@ public class Chassis extends Subsystem {
     lr.follow(lf);
     rm.follow(rf);
     rr.follow(rf);
-    lf.setInverted(false);
-    lm.setInverted(false);
-    lr.setInverted(false);
-    rf.setInverted(true);
-    rm.setInverted(true);
-    rr.setInverted(true);
+    lf.setInverted(true);
+    lm.setInverted(true);
+    lr.setInverted(true);
+    rf.setInverted(false);
+    rm.setInverted(false);
+    rr.setInverted(false);
+    lf.setRampRate(0);
+    rf.setRampRate(0);
 
     encoderl.setReverseDirection(true);
     encoderr.setReverseDirection(false);
@@ -97,11 +99,16 @@ public class Chassis extends Subsystem {
 
   public void arcadeDrive(double Power, double Rotate){//this is used for giving power for straight running and rotating 
       double leftPower, rightPower;
-      leftPower = range(Power +  Rotate, 1, -1);
-      rightPower = range(Power - Rotate, 1, -1);
+      leftPower = range(Power -  Rotate, 1, -1);
+      rightPower = range(Power + Rotate, 1, -1);
       lf.set(leftPower);
       rf.set(rightPower);
   }
+
+  public void arcadeDrive(double[] u){//this is used for giving power for straight running and rotating 
+    arcadeDrive(u[0],u[1]);
+  }
+
 /*
   public void arcadeDrive_Speed(double Power, double Rotate,double Kspeed){//this is used for giving power for straight running and rotating 
     double leftPower, rightPower;
