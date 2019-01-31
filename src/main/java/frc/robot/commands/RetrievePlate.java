@@ -5,50 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Intake_Holder;
+package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class CalibrateHolder extends Command {
-  Timer timer = new Timer();
-
-  public CalibrateHolder() {
-    requires(Robot.holder);
-    this.accum = 0;
+public class RetrievePlate extends Command {
+  public RetrievePlate() {
+    requires(Robot.platedispenser);
   }
-  private double accum = 0;
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.holder.move(-0.2);
-    timer.reset();
-    timer.start();
+    Robot.platedispenser.release();
+    Robot.platedispenser.extend();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    accum += 0.02 * Math.max(Robot.holder.getHolderCurrent()-RobotMap.HOLDER_CALIBRATION_AMP_THRESHOLD,0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return this.accum > RobotMap.HOLDER_CALIBRATION_ACCUM_THRESHOLD;
+    return Robot.platedispenser.get()[0] && Robot.platedispenser.get()[1];
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.holder.stopHolder();
-    Robot.holder.resetEncoder(RobotMap.HOLDER_CALIBRATE_OFFSET);
-
-    Robot.holder.calibrated();
-
+    Robot.platedispenser.hold();
+    Robot.platedispenser.retract();
   }
 
   // Called when another command which requires one or more of the same

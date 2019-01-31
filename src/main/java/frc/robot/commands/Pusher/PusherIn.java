@@ -5,41 +5,38 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Intake_Holder;
+package frc.robot.commands.Pusher;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class IntakeToHolder extends Command {
-  public IntakeToHolder() {
-    //requires(Robot.intake);
-    //requires(Robot.holder);
-    //requires(Robot.elevator);
+public class PusherIn extends Command {
+  public PusherIn() {
+    requires(Robot.pusher);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //Robot.elevator.movetoposition(RobotMap.ELEVATOR_DOWN_POS);  
+    Robot.pusher.moveIn();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Math.abs((Robot.pusher.getPosition()[0] + Robot.pusher.getPosition()[1])/2 - RobotMap.PUSHER_IN_POSITION)< RobotMap.PUSHER_ALLOWABLE_ERROR;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.pusher.move(0);
   }
 
   // Called when another command which requires one or more of the same

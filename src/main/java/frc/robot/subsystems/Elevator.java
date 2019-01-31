@@ -47,11 +47,11 @@ public class Elevator extends Subsystem {
 
   //climber supporter holder
   public void Release(){
-    this.holder.set(false);
+    this.holder.set(true);
   }
 
   public void Retract(){
-    this.holder.set(true);
+    this.holder.set(false);
   }
   //basic move
   public void move(double input){
@@ -67,6 +67,7 @@ public class Elevator extends Subsystem {
     input = input - RobotMap.ELEVATOR_MILIMETERS_OFFSET;
     r2.selectProfileSlot(1, 0);
     r2.set(ControlMode.Position,input);
+
   }
 
   public void ProfileToPoosition(double position){
@@ -74,6 +75,7 @@ public class Elevator extends Subsystem {
     r2.selectProfileSlot(2, 0);
     r2.set(ControlMode.MotionMagic, position);
   }
+
 
   //get sensor readings
   public double[] getOutput(){

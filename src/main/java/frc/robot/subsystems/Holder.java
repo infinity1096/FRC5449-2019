@@ -26,6 +26,7 @@ public class Holder extends Subsystem {
   private TalonSRX turner;
   private double Outpower;
   private double Inpower;
+  private boolean is_calibrated = false;
   
   public Holder(){
     Outpower = RobotMap.HOLDER_OUT_POWER;
@@ -37,6 +38,8 @@ public class Holder extends Subsystem {
     turner.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     turner.setSelectedSensorPosition(0);
     turner.configSelectedFeedbackCoefficient(RobotMap.HOLDER_ENCODERUNIT_TO_DEG_COEFF);
+
+    this.is_calibrated = false;
   }
 
   public void moveToPos(double pos){
@@ -62,6 +65,10 @@ public class Holder extends Subsystem {
     this.shooter.set(ControlMode.PercentOutput, Outpower);
   }
 
+  public void hold(){
+    this.shooter.set(ControlMode.PercentOutput, 0.07);
+  }
+
   public void inTake(){
     this.shooter.set(ControlMode.PercentOutput, Inpower);
   }
@@ -71,6 +78,14 @@ public class Holder extends Subsystem {
   }
 
 
+  public void calibrated(){
+    this.is_calibrated = true;
+  }
+
+
+  public boolean is_calibrated(){
+    return this.is_calibrated;
+  }
 
   //get command
 
@@ -80,6 +95,15 @@ public class Holder extends Subsystem {
 
   public double getPosition(){
     return this.turner.getSelectedSensorPosition();
+  }
+
+
+  public double getSpeed(){
+    return this.turner.getSelectedSensorVelocity();
+  }
+
+  public double getShooterCurrent(){
+    return this.shooter.getOutputCurrent();
   }
 
   //reset command

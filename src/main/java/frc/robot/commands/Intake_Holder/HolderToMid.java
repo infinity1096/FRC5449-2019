@@ -7,50 +7,63 @@
 
 package frc.robot.commands.Intake_Holder;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class CalibrateHolder extends Command {
-  Timer timer = new Timer();
+public class HolderToMid extends Command {
 
-  public CalibrateHolder() {
+  private boolean ishold = true;
+  private double accum =0;
+  private double comp;
+  private double error;
+
+  public HolderToMid() {
     requires(Robot.holder);
-    this.accum = 0;
   }
-  private double accum = 0;
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.holder.move(-0.2);
-    timer.reset();
-    timer.start();
+    this.accum = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    accum += 0.02 * Math.max(Robot.holder.getHolderCurrent()-RobotMap.HOLDER_CALIBRATION_AMP_THRESHOLD,0);
+    comp = 0.125 * Math.cos(Math.toRadians(83 + Robot.holder.getPosition()));
+    error = RobotMap.HOLDER_MID_POSITION - Robot.holder.getPosition();
+    System.out.println(error);
+    double P,I,D;
+    P = 7;
+    D = 9;//12
+    I = 0.003;//0.0014
+    SmartDashboard.putNumber("error", error);
+    double output = P * error + -D * Robot.holder.getSpeed() + I * this.accum;
+    output /= 1023;
+    output += comp;
+    Robot.holder.move(output);
+    this.accum += 20 * error;
+    if (accum > 30000){
+      accum = 30000;
+    }
+    if(accum < -30000){
+      accum = -30000;
+    } 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return this.accum > RobotMap.HOLDER_CALIBRATION_ACCUM_THRESHOLD;
+    return  !Robot.holder.is_calibrated();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.holder.stopHolder();
-    Robot.holder.resetEncoder(RobotMap.HOLDER_CALIBRATE_OFFSET);
-
-    Robot.holder.calibrated();
-
+      Robot.holder.stopHolder();
   }
-
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override

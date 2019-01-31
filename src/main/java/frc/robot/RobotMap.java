@@ -27,6 +27,12 @@ public class RobotMap {
     public static final int CHASSIS_RF_MOTOR_PORT = 4;
     public static final int CHASSIS_RM_MOTOR_PORT = 5;
     public static final int CHASSIS_RR_MOTOR_PORT = 6;
+
+    public static final int CHASSIS_ENCODERL_PORT_A = 6;
+    public static final int CHASSIS_ENCODERL_PORT_B = 7;
+
+    public static final int CHASSIS_ENCODERR_PORT_A = 8;
+    public static final int CHASSIS_ENCODERR_PORT_B = 9;
     //Elevator
     public static final int ELEVATOR_L1_MOTOR_PORT = 15;
     public static final int ELEVATOR_L2_MOTOR_PORT = 14;
@@ -56,6 +62,15 @@ public class RobotMap {
     public static final int HOLDER_HOLDERSENSOR_IR_PORT = 2;
 
 
+
+//Chassis
+  //hardware parameters
+  public static final double CHASSIS_ENCUNIT2METERS_COEFF = 3.2867e-4;
+  //software parameters
+  public static final double CHASSIS_POSDRIVE_KP = 0.1;//KP > 0
+  public static final double CHASSIS_POSDRIVE_KA = 0.3;//KA - KP > 0
+  public static final double CHASSIS_POSDRIVE_KB = -0.2;//KB < 0
+
 //Elevator
   //hardware parameters
     public static final double ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF = 0.0493; 
@@ -74,15 +89,31 @@ public class RobotMap {
     public static final double HOLDER_OUT_POWER = -1.0;
     public static final double HOLDER_IN_POWER =  0.5;
     public static final long HOLDER_UP_POSITION = 20;
+    public static final long HOLDER_MID_POSITION = 0;
     public static final long HOLDER_DOWN_POSITION = -90;
+    
     public static final double HOLDER_ALLOWABLE_ERROR = 3;
     public static final double HOLDER_CALIBRATION_AMP_THRESHOLD = 2.0;//Amp
     public static final double HOLDER_CALIBRATION_ACCUM_THRESHOLD = 0.25;//Amp * sec
+
+    public static final double HOLDER_INTAKE_AMP_THRESHOLD = 10; //Amp
+    public static final double HOLDER_INTAKE_ACCUM_THRESHOLD = 1;//Amp * sec
 //intake
-  public static final double powerIn = -1;//this value remains to be determined
+  public static final double powerIn = -0.6;//this value remains to be determined
   public static final double powerOut = 0.5;//this value remains to be determined
 
+  
+
 //pusher
+  //hardware parameters
   public static final double PUSHER_ENCODERUNIT_TO_MM_COEFF = 0.4215;//mm
+  //software parameters
+  public static final double PUSHER_IN_POSITION = 0;
+  public static final double PUSHER_OUT_POSITION = 600;
+  public static final double PUSHER_ALLOWABLE_ERROR = 5;
+  public static final double PUSHER_CALIBRATION_AMP_THRESHOLD = 0.75;//Amp
+  public static final double PUSHER_CALIBRATION_ACCUM_THRESHOLD = 0.2;//Amp * sec
+
 
 }
+
