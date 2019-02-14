@@ -19,6 +19,12 @@ public class PosDrive extends Command {
   private double kp = RobotMap.CHASSIS_POSDRIVE_KP;
   private double ka = RobotMap.CHASSIS_POSDRIVE_KA;
   private double kb = RobotMap.CHASSIS_POSDRIVE_KB;
+  private double kd = RobotMap.CHASSIS_POSDRIVE_KD;
+  private double ki_turn = RobotMap.CHASSIS_POSDRIVE_TURN_I;
+  private double ki_move = RobotMap.CHASSIS_POSDRIVE_MOVE_I;
+  private double activation_range = RobotMap.CHASSIS_POSDRIVE_I_ACTIVIATE_RANGE;
+  private double ki_turn_accum = 0;
+  private double ki_move_accum = 0;
 
   public PosDrive(double targetx, double targety, double targettheta) {
     this.target = new double[] { targetx, targety, targettheta};
@@ -57,8 +63,6 @@ public class PosDrive extends Command {
     double p_output;
     double omega_output;
     double[] u = {0,0};
-
-
       aph = Math.atan2((target[1] - RobotPos[1]), (target[0] - RobotPos[0])) - (RobotPos[2]);
       aph = Math.atan2(Math.sin(aph), Math.cos(aph));
       if (-Math.PI / 2 < aph && aph <= Math.PI / 2) {
@@ -84,11 +88,58 @@ public class PosDrive extends Command {
         // do simulation - Xd = Bu ~ Xt = Xt-1 + Xd * dt
         u = new double[] { -p_output, omega_output };
       }
-      SmartDashboard.putNumber("u0", u[0]);
+      //Apply Kd - not sure it actually works, thus DEPRECATED
+      //u[1] = u[1] + kd * Math.signum(u[1]) * -Robot.gyro.getRate();
+      if (Math.abs(p) < activation_range){
+        u[0] = deadzone2(u[0],0.12);
+        if (Math.abs(p) < 0.05){
+        double delta_angle = target[2] - RobotPos[2];
+        delta_angle = Math.atan2(Math.sin(delta_angle), Math.cos(delta_angle));
+        u[1] = ka * delta_angle;
+        u[0] = 0;
+      }
+      }
+      //Limit omega output
+      if (Math.abs(u[1]) > RobotMap.CHASSIS_POSDRIVE_P_OMEGA_LIMIT){
+        u[1] = Math.signum(u[1]) * RobotMap.CHASSIS_POSDRIVE_P_OMEGA_LIMIT;
+      }
+
+      //Limit Kp output - indespensible, or the robot wouls turn crazy
+      if (Math.abs(u[0]) > RobotMap.CHASSIS_POSDRIVE_P_LIMIT){
+        u[0] = Math.signum(u[0]) * RobotMap.CHASSIS_POSDRIVE_P_LIMIT;
+      }
+      
+      SmartDashboard.putNumber("KD output", kd * Math.signum(u[1]) * Robot.gyro.getRate());
       SmartDashboard.putNumber("u1", u[1]);
+      u[0] = deadzone2(u[0],0.05);
+      u[1] = deadzone2(u[1],0.02);
       Robot.chassis.arcadeDrive(u);
   }
+  public double range(double value, double max, double min){
+    double finalValue = 0.0;
+    if(value > max ){
+      finalValue = max;
+    }
 
+    else if(value < min){
+      finalValue = min;
+    }
+    else{
+      finalValue = value;
+    }
+   
+    return finalValue;
+  }
+
+  public double deadzone2(double value, double deadzone){
+    double finalValue = 0.0;
+    if(Math.abs(value) < deadzone ){
+      finalValue = Math.signum(value) *deadzone;
+    }else{
+      finalValue = value;
+    }
+    return finalValue;
+  }
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
@@ -99,8 +150,7 @@ public class PosDrive extends Command {
     heading = Math.atan2(Math.sin(heading), Math.cos(heading));
     this.RobotPos[2] = heading;
     double p = Math.hypot(target[0] - RobotPos[0], target[1] - RobotPos[1]);
-    return (Math.abs(p) < 0.05
-    && Math.abs(Math.atan2(Math.sin(RobotPos[2] - target[2]), Math.cos(RobotPos[2] - target[2]))) < 0.05);
+    return (Math.abs(p) < 0.05 && Math.abs(heading - target[2]) < 0.05);
   }
 
   // Called once after isFinished returns true

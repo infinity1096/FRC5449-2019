@@ -25,6 +25,7 @@ import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
 import frc.robot.commands.PlateDispenser.Release;
 import frc.robot.commands.PlateDispenser.Retract;
+import frc.robot.commands.PlateDispenser.RetrievePlate;
 import frc.robot.commands.Pusher.PusherIn;
 import frc.robot.commands.Pusher.PusherOut;
 
@@ -53,7 +54,7 @@ public class OI {
   public JoystickButton HolderDown = new JoystickButton(stick0, 12);
   public JoystickButton intake = new JoystickButton(stick0, 2);
   public JoystickButton shoot = new JoystickButton(stick0, 6);
-  public JoystickButton Releaseclimber = new JoystickButton(stick0, 4);
+  public JoystickButton RetrivePlate = new JoystickButton(stick0, 4);
 
   OI(){
 
@@ -68,7 +69,7 @@ public class OI {
     extend.whenPressed(new PusherOut());
     retrive.whenPressed(new PusherIn());
     intake.whenPressed(new IntakeBall());
-    Releaseclimber.whenPressed(new ReleaseClimber());
+    RetrivePlate.whenPressed(new RetrievePlate());
     shoot.whenPressed(new Shoot());
     //button1.whenPressed(new PlacePlate());    
     //button1.whenPressed(new moveToDown());

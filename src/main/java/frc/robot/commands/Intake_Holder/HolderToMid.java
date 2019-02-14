@@ -34,23 +34,25 @@ public class HolderToMid extends Command {
   protected void execute() {
     comp = 0.125 * Math.cos(Math.toRadians(83 + Robot.holder.getPosition()));
     error = RobotMap.HOLDER_MID_POSITION - Robot.holder.getPosition();
-    System.out.println(error);
     double P,I,D;
     P = 7;
-    D = 9;//12
-    I = 0.003;//0.0014
-    SmartDashboard.putNumber("error", error);
+    D = 8;//12
+    I = 0.005;//0.0014
     double output = P * error + -D * Robot.holder.getSpeed() + I * this.accum;
     output /= 1023;
     output += comp;
     Robot.holder.move(output);
-    this.accum += 20 * error;
+    if (Math.abs(error) < 10){
+      this.accum += 20 * error;
+    }
+    
     if (accum > 30000){
       accum = 30000;
     }
     if(accum < -30000){
       accum = -30000;
-    } 
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

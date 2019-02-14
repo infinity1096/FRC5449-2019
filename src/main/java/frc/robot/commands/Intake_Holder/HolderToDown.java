@@ -50,7 +50,9 @@ public class HolderToDown extends Command {
     output /= 1023;
     output += comp;
     Robot.holder.move(output);
-    this.accum += 20 * error;
+    if (Math.abs(error) < 10){
+      this.accum += 20 * error;
+    }
     if (accum > 30000){
       accum = 30000;
     }

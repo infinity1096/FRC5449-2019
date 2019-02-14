@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motion.TrajectoryPoint;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -43,6 +44,13 @@ public class Chassis extends Subsystem {
     rr.setInverted(false);
     lf.setRampRate(0);
     rf.setRampRate(0);
+    lf.setIdleMode(IdleMode.kBrake);
+    lm.setIdleMode(IdleMode.kBrake);
+    lr.setIdleMode(IdleMode.kBrake);
+    rf.setIdleMode(IdleMode.kBrake);
+    rm.setIdleMode(IdleMode.kBrake);
+    rr.setIdleMode(IdleMode.kBrake);
+    
 
     encoderl.setReverseDirection(true);
     encoderr.setReverseDirection(false);

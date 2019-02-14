@@ -46,7 +46,6 @@ public class CalibrateHolder extends Command {
   protected void end() {
     Robot.holder.stopHolder();
     Robot.holder.resetEncoder(RobotMap.HOLDER_CALIBRATE_OFFSET);
-
     Robot.holder.calibrated();
 
   }

@@ -24,7 +24,6 @@ import frc.robot.commands.Chassis.PosDrive;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
 import frc.robot.commands.Intake_Holder.HolderToDown;
 import frc.robot.commands.Intake_Holder.HolderToUp;
-import frc.robot.commands.Pusher.CalibratePusher;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Holder;
@@ -153,7 +152,6 @@ public class Robot extends TimedRobot {
     elevator.stop();
     elevator.clearEncoder();//Only for tests
     elevator.clearI();
-
     new CalibrateHolder().start();
     this.gyro.reset();
     odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
@@ -171,16 +169,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    log();
+  }
 
-
-    SmartDashboard.putData(new CalibratePusher());
-    SmartDashboard.putData("Pos_drive_for",new PosDrive(2.1, 2.3, -Math.PI*2/3));
-    SmartDashboard.putData("Pos_drive_back",new PosDrive(0, 0, Math.PI/2));
+  private void log(){
     double heading = (Math.toRadians(-gyro.getYaw()) + Math.PI/2);
     heading = Math.atan2(Math.sin(heading),Math.cos(heading));
     SmartDashboard.putNumber("X:",odometry.get()[0]);
     SmartDashboard.putNumber("Y:",odometry.get()[1]);
-
   }
 
   /**

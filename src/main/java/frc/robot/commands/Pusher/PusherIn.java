@@ -30,13 +30,12 @@ public class PusherIn extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs((Robot.pusher.getPosition()[0] + Robot.pusher.getPosition()[1])/2 - RobotMap.PUSHER_IN_POSITION)< RobotMap.PUSHER_ALLOWABLE_ERROR;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.pusher.move(0);
   }
 
   // Called when another command which requires one or more of the same

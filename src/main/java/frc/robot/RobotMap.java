@@ -43,9 +43,6 @@ public class RobotMap {
     public static final int HOLDER_TURNER_MOTOR_PORT = 10;
     //intake
     public static final int INTAKE_MOTOR = 11;
-    //pusher
-    public static final int PUSHER_L_PORT = 13;
-    public static final int PUSHER_R_PORT = 9;
 //Pneumatics
   //PCM
     public static final int PCM_PORT = 0;
@@ -53,6 +50,7 @@ public class RobotMap {
     public static final int ELEVATOR_DISPESER_PORT = 0;
     public static final int PLATEDISPENSER_PUSHER_SOLENOID_PORT = 1;
     public static final int PLATEDISPENSER_HOLDER_SOLENOID_PORT = 2;
+    public static final int PUSHER_SOLENOID_PORT = 3;
 
 //Sensors
   //touch sensor
@@ -67,9 +65,18 @@ public class RobotMap {
   //hardware parameters
   public static final double CHASSIS_ENCUNIT2METERS_COEFF = 3.2867e-4;
   //software parameters
-  public static final double CHASSIS_POSDRIVE_KP = 0.1;//KP > 0
-  public static final double CHASSIS_POSDRIVE_KA = 0.3;//KA - KP > 0
+  public static final double CHASSIS_POSDRIVE_I_ACTIVIATE_RANGE = 0.5;
+  public static final double CHASSIS_POSDRIVE_KP = 0.15;//KP > 0
+  public static final double CHASSIS_POSDRIVE_P_LIMIT = 0.4;
+  public static final double CHASSIS_POSDRIVE_P_OMEGA_LIMIT = 0.4;
+  public static final double CHASSIS_POSDRIVE_TURN_D_LIMIT = 0.2;
+  public static final double CHASSIS_POSDRIVE_TURN_I_LIMIT = 0.1;
+  public static final double CHASSIS_POSDRIVE_MOVE_I_LIMIT = 0.2;
+  public static final double CHASSIS_POSDRIVE_KA = 0.4;//KA - KP > 0
   public static final double CHASSIS_POSDRIVE_KB = -0.2;//KB < 0
+  public static final double CHASSIS_POSDRIVE_KD = 0.03;
+  public static final double CHASSIS_POSDRIVE_TURN_I = 0.01;
+  public static final double CHASSIS_POSDRIVE_MOVE_I = 0.04;
 
 //Elevator
   //hardware parameters
@@ -89,7 +96,7 @@ public class RobotMap {
     public static final double HOLDER_OUT_POWER = -1.0;
     public static final double HOLDER_IN_POWER =  0.5;
     public static final long HOLDER_UP_POSITION = 20;
-    public static final long HOLDER_MID_POSITION = 0;
+    public static final long HOLDER_MID_POSITION = 10;
     public static final long HOLDER_DOWN_POSITION = -90;
     
     public static final double HOLDER_ALLOWABLE_ERROR = 3;
@@ -102,17 +109,7 @@ public class RobotMap {
   public static final double powerIn = -0.6;//this value remains to be determined
   public static final double powerOut = 0.5;//this value remains to be determined
 
-  
 
-//pusher
-  //hardware parameters
-  public static final double PUSHER_ENCODERUNIT_TO_MM_COEFF = 0.4215;//mm
-  //software parameters
-  public static final double PUSHER_IN_POSITION = 0;
-  public static final double PUSHER_OUT_POSITION = 600;
-  public static final double PUSHER_ALLOWABLE_ERROR = 5;
-  public static final double PUSHER_CALIBRATION_AMP_THRESHOLD = 0.75;//Amp
-  public static final double PUSHER_CALIBRATION_ACCUM_THRESHOLD = 0.2;//Amp * sec
 
 
 }

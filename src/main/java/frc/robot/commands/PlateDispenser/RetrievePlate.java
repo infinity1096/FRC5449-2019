@@ -30,10 +30,10 @@ public class RetrievePlate extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (timer.get() < 0.15){
+    if (timer.get() < 0.3){
       Robot.platedispenser.extend();
       Robot.platedispenser.hold();
-    } else if(timer.get() < 0.20){
+    } else if(timer.get() < 0.40){
       Robot.platedispenser.retract();
     } else{
       
@@ -44,7 +44,7 @@ public class RetrievePlate extends Command {
   @Override
   protected boolean isFinished() {
     //return Robot.platedispenser.get()[0] && Robot.platedispenser.get()[1];
-    return false;
+    return timer.get() > 0.60;
   }
 
   // Called once after isFinished returns true
