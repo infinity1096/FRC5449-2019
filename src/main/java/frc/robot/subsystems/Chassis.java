@@ -142,15 +142,14 @@ public double[][] getEncoderValue(){
 
     return encoderValue;
 }
-/*
+
 public double[] getCurrent(){
   double[] results = {0,0};
   results[0] = lf.getOutputCurrent() + lm.getOutputCurrent() + lr.getOutputCurrent();
   results[1] = rf.getOutputCurrent() + rm.getOutputCurrent() + rr.getOutputCurrent();
   return results;
-
 }
-*/
+
 /*
 public double[][] getEncoderValue(){
   double encoderPosition[] = {testmotor.getSelectedSensorPosition()};

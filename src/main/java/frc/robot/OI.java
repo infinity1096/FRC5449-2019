@@ -71,6 +71,7 @@ public class OI {
     intake.whenPressed(new IntakeBall());
     RetrivePlate.whenPressed(new RetrievePlate());
     shoot.whenPressed(new Shoot());
+    
     //button1.whenPressed(new PlacePlate());    
     //button1.whenPressed(new moveToDown());
     //button2.whenPressed(new moveToMid());

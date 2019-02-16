@@ -20,7 +20,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Odometry.Odometry;
+import frc.robot.commands.Chassis.BumpBack;
+import frc.robot.commands.Chassis.Climb;
 import frc.robot.commands.Chassis.PosDrive;
+import frc.robot.commands.Chassis.TurnTo;
+import frc.robot.commands.Elevator.ElevateTo;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
 import frc.robot.commands.Intake_Holder.HolderToDown;
 import frc.robot.commands.Intake_Holder.HolderToUp;
@@ -157,6 +161,7 @@ public class Robot extends TimedRobot {
     odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
     odometry_notifier = new Notifier(odometry);
     odometry_notifier.startPeriodic(0.02);
+
   }
 
   /**
@@ -170,13 +175,21 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     log();
+    SmartDashboard.putData("0",new TurnTo(0));
+    SmartDashboard.putData("pi",new TurnTo(Math.PI/2));
+    SmartDashboard.putData("Climb Ready",new ElevateTo(1650));
+    SmartDashboard.putData("Climb",new Climb());
   }
 
   private void log(){
     double heading = (Math.toRadians(-gyro.getYaw()) + Math.PI/2);
     heading = Math.atan2(Math.sin(heading),Math.cos(heading));
+    SmartDashboard.putNumber("Heading",heading);
     SmartDashboard.putNumber("X:",odometry.get()[0]);
     SmartDashboard.putNumber("Y:",odometry.get()[1]);
+    SmartDashboard.putNumber("Tilt", gyro.getRoll());
+    SmartDashboard.putNumber("Chassis Current LEFT", chassis.getCurrent()[0]);
+    SmartDashboard.putNumber("Chassis Current RIGHT", chassis.getCurrent()[1]);
   }
 
   /**

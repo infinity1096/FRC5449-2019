@@ -75,9 +75,14 @@ public class RobotMap {
   public static final double CHASSIS_POSDRIVE_KA = 0.4;//KA - KP > 0
   public static final double CHASSIS_POSDRIVE_KB = -0.2;//KB < 0
   public static final double CHASSIS_POSDRIVE_KD = 0.03;
-  public static final double CHASSIS_POSDRIVE_TURN_I = 0.01;
-  public static final double CHASSIS_POSDRIVE_MOVE_I = 0.04;
-
+    //TurnTo
+    public static final double CHASSIS_POSDRIVE_TURN_I = 0.01;
+    public static final double CHASSIS_POSDRIVE_MOVE_I = 0.04;
+    public static final double CHASSIS_TURNING_P = 0.4;
+    public static final double CHASSIS_TURNING_D = 3;
+    //Bump 
+    public static final double CHASSIS_BUMP_AMP_THRESHOLD = 55;//Amp
+    public static final double CHASSIS_BUMP_ACCUM_THRESHOLD = 8;//Amp * sec
 //Elevator
   //hardware parameters
     public static final double ELEVATOR_ENCODERUNIT_TO_MILLIMETERS_COEFF = 0.0493; 
@@ -87,7 +92,6 @@ public class RobotMap {
     public static final double ELEVATOR_MID_POS = 1192;//this value remains to be determined
     public static final double ELEVATOR_UP_POS = 1902;//this value remains to be determined
     public static final double ELEVATOR_AllOWABLE_ERROR = 10;//this value remains to be determined
-
 //Holder
   //hardware Parameters
     public static final double HOLDER_ENCODERUNIT_TO_DEG_COEFF = 0.3271;
@@ -100,7 +104,7 @@ public class RobotMap {
     public static final long HOLDER_DOWN_POSITION = -90;
     
     public static final double HOLDER_ALLOWABLE_ERROR = 3;
-    public static final double HOLDER_CALIBRATION_AMP_THRESHOLD = 2.0;//Amp
+    public static final double HOLDER_CALIBRATION_AMP_THRESHOLD = 1.5;//Amp
     public static final double HOLDER_CALIBRATION_ACCUM_THRESHOLD = 0.25;//Amp * sec
 
     public static final double HOLDER_INTAKE_AMP_THRESHOLD = 10; //Amp

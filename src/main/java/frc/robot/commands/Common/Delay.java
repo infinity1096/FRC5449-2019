@@ -5,17 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands.Common;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
 
-public class ReleaseClimber extends Command {
+public class Delay extends Command {
   Timer timer = new Timer();
-  public ReleaseClimber() {
-    requires(Robot.elevator);
+  private double delaytime = 0;
+  public Delay(double delaytime) {
+    this.delaytime = delaytime;
   }
 
   // Called just before this Command runs the first time
@@ -23,7 +22,6 @@ public class ReleaseClimber extends Command {
   protected void initialize() {
     timer.reset();
     timer.start();
-    Robot.elevator.Release();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -34,13 +32,12 @@ public class ReleaseClimber extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return timer.get() >= delaytime;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //Robot.elevator.Retract();
   }
 
   // Called when another command which requires one or more of the same

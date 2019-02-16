@@ -5,42 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Elevator;
+package frc.robot.commands.Chassis;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.Elevator;
 
-public class ReleaseClimber extends Command {
-  Timer timer = new Timer();
-  public ReleaseClimber() {
-    requires(Robot.elevator);
+public class Drive extends Command {
+
+  private double power = 0.2;
+  private boolean stop = false;
+
+  public Drive(double power) {
+    requires(Robot.chassis);
+    this.power = power;
+    this.stop = false;
+  }
+  
+  public Drive(double power,boolean stop) {
+    requires(Robot.chassis);
+    this.power = power;
+    this.stop = stop;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    timer.reset();
-    timer.start();
-    Robot.elevator.Release();
+    Robot.chassis.arcadeDrive(power, 0);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.chassis.arcadeDrive(power, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return this.stop;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //Robot.elevator.Retract();
   }
 
   // Called when another command which requires one or more of the same

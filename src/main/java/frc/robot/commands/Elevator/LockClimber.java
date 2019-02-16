@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
-public class ReleaseClimber extends Command {
+public class LockClimber extends Command {
   Timer timer = new Timer();
-  public ReleaseClimber() {
+  public LockClimber() {
     requires(Robot.elevator);
   }
 
@@ -23,7 +23,7 @@ public class ReleaseClimber extends Command {
   protected void initialize() {
     timer.reset();
     timer.start();
-    Robot.elevator.Release();
+    Robot.elevator.Retract();
   }
 
   // Called repeatedly when this Command is scheduled to run

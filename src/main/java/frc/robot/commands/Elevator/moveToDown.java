@@ -36,7 +36,7 @@ public class moveToDown extends Command {
   @Override
   protected boolean isFinished() {
 
-    return false && Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_DOWN_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    return Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_DOWN_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
 
   }
 
