@@ -17,43 +17,22 @@ import frc.robot.commands.Elevator.moveToDown;
 import frc.robot.commands.Pusher.PusherIn;
 import frc.robot.commands.Pusher.PusherOut;
 
-public class Climb extends CommandGroup {
+public class ClimbHigh extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Climb() {
-
-    /*
-
+  public ClimbHigh() {
     addParallel(new ElevateTo(1650));
     addSequential(new TurnTo(Math.PI/2));
     addSequential(new BumpBack());
     addSequential(new ReleaseClimber());
-    */
     addParallel(new Drive(-0.1));
     addSequential(new moveToDown());
     addSequential(new PusherOut());
     addSequential(new WaitHorizontal());
     addParallel(new ElevateTo(700));
     addSequential(new Delay(0.4));
-    addParallel(new Drive(0));
+    addParallel(new Drive(0,true));
     addSequential(new PusherIn());
-    
-
-    
-    
-
-
-    // To run multiple commands at the same time,
-    // use addParallel()
-    // e.g. addParallel(new Command1());
-    // addSequential(new Command2());
-    // Command1 and Command2 will run in parallel.
-
-    // A command group will require all of the subsystems that each member
-    // would require.
-    // e.g. if Command1 requires chassis, and Command2 requires arm,
-    // a CommandGroup containing them would require both the chassis and the
-    // arm.
   }
 }

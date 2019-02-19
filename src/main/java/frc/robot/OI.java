@@ -71,15 +71,6 @@ public class OI {
     intake.whenPressed(new IntakeBall());
     RetrivePlate.whenPressed(new RetrievePlate());
     shoot.whenPressed(new Shoot());
-    
-    //button1.whenPressed(new PlacePlate());    
-    //button1.whenPressed(new moveToDown());
-    //button2.whenPressed(new moveToMid());
-    //button3.whenPressed(new moveToUp());
-    
-    //intake.whenPressed(new IntakeBall());
-    
-
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to

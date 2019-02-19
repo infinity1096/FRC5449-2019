@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Elevator;
 
-public class ReleaseClimber extends Command {
+public class UnlockClimber extends Command {
   Timer timer = new Timer();
-  public ReleaseClimber() {
+  public UnlockClimber() {
     requires(Robot.elevator);
   }
 
@@ -35,13 +35,13 @@ public class ReleaseClimber extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timer.get()>1.6;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevator.Retract();
+    //Robot.elevator.Retract();
   }
 
   // Called when another command which requires one or more of the same

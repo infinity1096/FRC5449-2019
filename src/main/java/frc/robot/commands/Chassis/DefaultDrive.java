@@ -9,6 +9,7 @@ package frc.robot.commands.Chassis;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.Arduino.Status;
 
 public class DefaultDrive extends Command {
   public DefaultDrive() {
@@ -19,13 +20,14 @@ public class DefaultDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.arduino.set(Status.kREMOTE);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     
-    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(0),0.1);
+    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(2),0.1);
     double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
 
     if (inputy > 0.1){
@@ -57,5 +59,6 @@ public class DefaultDrive extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.arduino.set(Status.kAUTONOMOUS);
   }
 }

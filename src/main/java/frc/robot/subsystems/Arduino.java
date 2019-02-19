@@ -7,46 +7,34 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class Pusher extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+public class Arduino extends Subsystem {
 
+  private SerialPort serial = new SerialPort(115200, Port.kMXP);
 
-  Solenoid pusher;
-
-  public Pusher(){
-    this.pusher = new Solenoid(RobotMap.PUSHER_SOLENOID_PORT);
+  public enum Status {
+    kOFF(0), kDISABLED(1), kREMOTE(2), kAUTONOMOUS(3), kFINDING(4);
+    @SuppressWarnings("MemberName")
+    public final int value;
+    Status(int value) {
+      this.value = value;
+    }
   }
 
+  public void set(Status status){
+    byte[] buffer = new byte[]{(byte)status.value};
+    this.serial.write(buffer, 1);
+  }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
-
-
-
-  public void moveOut(){
-    this.pusher.set(true);
-  }
-
-  public void moveIn(){
-    this.pusher.set(false);
-  }
-
 }

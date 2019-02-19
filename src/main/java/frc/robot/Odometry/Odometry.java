@@ -73,6 +73,13 @@ public class Odometry implements Runnable{
         return Position.toArray();
     }
 
+    public void setPos(double[] Position){
+        this.Position = new ArrayRealVector(Position);
+    }
+    public void setPos(double deltaX, double deltaY){
+        this.Position = new ArrayRealVector(new double[] {deltaX,deltaY});
+    }
+
     private double[] getMeasurement() {
         double xdd,ydd,h,hd;
         h = Math.toRadians(-Robot.gyro.getYaw());

@@ -89,9 +89,9 @@ public class RobotMap {
     public static final double ELEVATOR_MILIMETERS_OFFSET = 480;
   //Software Parameters
     public static final double ELEVATOR_DOWN_POS = ELEVATOR_MILIMETERS_OFFSET;
-    public static final double ELEVATOR_MID_POS = 1192;//this value remains to be determined
-    public static final double ELEVATOR_UP_POS = 1902;//this value remains to be determined
-    public static final double ELEVATOR_AllOWABLE_ERROR = 10;//this value remains to be determined
+    public static final double ELEVATOR_MID_POS = 1192;
+    public static final double ELEVATOR_UP_POS = 1902;
+    public static final double ELEVATOR_AllOWABLE_ERROR = 20;//this value remains to be determined
 //Holder
   //hardware Parameters
     public static final double HOLDER_ENCODERUNIT_TO_DEG_COEFF = 0.3271;

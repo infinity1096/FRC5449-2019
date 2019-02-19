@@ -13,6 +13,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.UsbCameraInfo;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,20 +21,26 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Odometry.Odometry;
+import frc.robot.Triggers.GetChassisControl;
+import frc.robot.commands.Autonomous.AutoRetrivePlate;
 import frc.robot.commands.Chassis.BumpBack;
-import frc.robot.commands.Chassis.Climb;
+import frc.robot.commands.Chassis.ClimbHigh;
+import frc.robot.commands.Chassis.HoldChassis;
 import frc.robot.commands.Chassis.PosDrive;
 import frc.robot.commands.Chassis.TurnTo;
 import frc.robot.commands.Elevator.ElevateTo;
+import frc.robot.commands.Elevator.LockClimber;
+import frc.robot.commands.Elevator.ReleaseClimber;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
-import frc.robot.commands.Intake_Holder.HolderToDown;
-import frc.robot.commands.Intake_Holder.HolderToUp;
+import frc.robot.commands.Odometry.UpdateOdometryPos;
+import frc.robot.subsystems.Arduino;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Holder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PlateDispenser;
 import frc.robot.subsystems.Pusher;
+import frc.robot.subsystems.Arduino.Status;
 
 
 
@@ -52,10 +59,10 @@ public class Robot extends TimedRobot {
   public static Intake intake = new Intake();
   public static Elevator elevator = new Elevator();
   public static Pusher pusher = new Pusher();
-
+  public static Arduino arduino = new Arduino();
   public static AHRS gyro = new AHRS(Port.kMXP);
   public static OI oi = new OI();
-  
+  public static GetChassisControl getchassiscontrol = new GetChassisControl();
   public static Odometry odometry;
   Notifier odometry_notifier;
   Command m_autonomousCommand;
@@ -66,8 +73,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance().startAutomaticCapture();
-
+    getchassiscontrol.whenActive(new HoldChassis());
+    //CameraServer.getInstance().startAutomaticCapture();
     /*
     Timer timer = new Timer();
     timer.reset();
@@ -105,6 +112,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    arduino.set(Status.kDISABLED);
     if (odometry_notifier != null){
       this.odometry_notifier.stop();
     }
@@ -112,6 +120,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    arduino.set(Status.kDISABLED);
     Scheduler.getInstance().run();
   }
 
@@ -175,19 +184,30 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     log();
+    double val = -oi.stick0.getRawAxis(3);
+
     SmartDashboard.putData("0",new TurnTo(0));
     SmartDashboard.putData("pi",new TurnTo(Math.PI/2));
     SmartDashboard.putData("Climb Ready",new ElevateTo(1650));
-    SmartDashboard.putData("Climb",new Climb());
+    SmartDashboard.putData("ClimbHigh",new ClimbHigh());
+    SmartDashboard.putData("ClimbLow",new ClimbHigh());
+    SmartDashboard.putData("RELEASEClimb",new ReleaseClimber());
+    SmartDashboard.putData("LOCK_climb",new LockClimber());
+    SmartDashboard.putData("LOCK_CHASSIS",new HoldChassis());
+    SmartDashboard.putData("Auto Plate",new AutoRetrivePlate());
+    SmartDashboard.putData("Update Odometry",new UpdateOdometryPos());
   }
 
-  private void log(){
+
+private void log(){
     double heading = (Math.toRadians(-gyro.getYaw()) + Math.PI/2);
     heading = Math.atan2(Math.sin(heading),Math.cos(heading));
     SmartDashboard.putNumber("Heading",heading);
-    SmartDashboard.putNumber("X:",odometry.get()[0]);
-    SmartDashboard.putNumber("Y:",odometry.get()[1]);
+    SmartDashboard.putNumber("X",odometry.get()[0]);
+    SmartDashboard.putNumber("Y",odometry.get()[1]);
     SmartDashboard.putNumber("Tilt", gyro.getRoll());
+    double[] testarray = SmartDashboard.getNumberArray("testarray",new double[]{0});
+    SmartDashboard.putNumber("testNum",testarray[0]);
     SmartDashboard.putNumber("Chassis Current LEFT", chassis.getCurrent()[0]);
     SmartDashboard.putNumber("Chassis Current RIGHT", chassis.getCurrent()[1]);
   }
