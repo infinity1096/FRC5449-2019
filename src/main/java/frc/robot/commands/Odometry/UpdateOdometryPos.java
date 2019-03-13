@@ -18,10 +18,10 @@ public class UpdateOdometryPos extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    double OffsetX = 0.653;
+    double OffsetX = 0.000;
     double OffsetY = 0.000;
-    double PositionX = -SmartDashboard.getNumber("TargetX", 0) / 1000.0d + 0.23;
-    double PositionY = -SmartDashboard.getNumber("TargetY", 0) / 1000.0d + 0.00;
+    double PositionX = SmartDashboard.getNumber("r_x", 0);
+    double PositionY = SmartDashboard.getNumber("r_y", 0);
     Robot.odometry.setPos(OffsetX + PositionX,OffsetY + PositionY);
   }
 

@@ -48,8 +48,8 @@ public class RobotMap {
     public static final int PCM_PORT = 0;
   //Solenoid
     public static final int ELEVATOR_DISPESER_PORT = 0;
-    public static final int PLATEDISPENSER_PUSHER_SOLENOID_PORT = 1;
-    public static final int PLATEDISPENSER_HOLDER_SOLENOID_PORT = 2;
+    public static final int PLATEDISPENSER_PUSHER_SOLENOID_PORT = 2;
+    public static final int PLATEDISPENSER_HOLDER_SOLENOID_PORT = 1;
     public static final int PUSHER_SOLENOID_PORT = 3;
 
 //Sensors
@@ -91,6 +91,7 @@ public class RobotMap {
     public static final double ELEVATOR_DOWN_POS = ELEVATOR_MILIMETERS_OFFSET;
     public static final double ELEVATOR_MID_POS = 1192;
     public static final double ELEVATOR_UP_POS = 1902;
+    public static final double ELEVATOR_CARGO_POS = 780;
     public static final double ELEVATOR_AllOWABLE_ERROR = 20;//this value remains to be determined
 //Holder
   //hardware Parameters

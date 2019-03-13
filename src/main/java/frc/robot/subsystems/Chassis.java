@@ -42,8 +42,6 @@ public class Chassis extends Subsystem {
     rf.setInverted(false);
     rm.setInverted(false);
     rr.setInverted(false);
-    lf.setRampRate(0);
-    rf.setRampRate(0);
     lf.setIdleMode(IdleMode.kBrake);
     lm.setIdleMode(IdleMode.kBrake);
     lr.setIdleMode(IdleMode.kBrake);

@@ -22,7 +22,8 @@ public class PlateDispenser extends Subsystem {
   private Solenoid pusher;
   private Solenoid holder;
   private DigitalInput s1;
-  private DigitalInput s2;  
+  private DigitalInput s2;
+  public boolean status = false;  
 
   public PlateDispenser(){
     this.pusher = new Solenoid(RobotMap.PLATEDISPENSER_PUSHER_SOLENOID_PORT);
@@ -34,18 +35,20 @@ public class PlateDispenser extends Subsystem {
   //Basic commands
   public void extend(){
     this.pusher.set(true);
+    this.status = true;
   }
 
   public void retract(){
     this.pusher.set(false);
+    this.status = false;
   }
 
   public void hold(){
-    this.holder.set(false);
+    this.holder.set(true);
   }
 
   public void release(){
-    this.holder.set(true);
+    this.holder.set(false);
   }
 
 

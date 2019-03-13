@@ -23,9 +23,6 @@ public class ClimbLow extends CommandGroup {
    * Add your docs here.
    */
   public ClimbLow() {
-    addParallel(new ElevateTo(1192));
-    addSequential(new TurnTo(Math.PI/2));
-    addSequential(new BumpBack());
     addSequential(new ReleaseClimber());
     addParallel(new Drive(-0.1));
     addSequential(new moveToDown());

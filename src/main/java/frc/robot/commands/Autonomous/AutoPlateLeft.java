@@ -9,14 +9,16 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.Chassis.PosDrive;
-import frc.robot.commands.Odometry.UpdateOdometryPos;
+import frc.robot.commands.PlateDispenser.initPlate;
 
-public class AutoRetrivePlate extends CommandGroup {
+public class AutoPlateLeft extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoRetrivePlate() {
-    addSequential(new UpdateOdometryPos());
-    addSequential(new PosDrive(0, 0, Math.PI/2));
+  public AutoPlateLeft() {
+    addSequential(new initPlate());
+    addSequential(new PosDrive(-0.057658,-1.9144,Math.PI/2));
+    addSequential(new PosDrive(-1.9809,-2.7101,Math.PI/3));
+    addSequential(new PosDrive(-2.3489,-3.4386,Math.PI/3));
   }
 }

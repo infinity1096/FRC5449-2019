@@ -5,18 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Intake_Holder;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.Chassis.PosDrive;
-import frc.robot.commands.Odometry.UpdateOdometryPos;
 
-public class AutoRetrivePlate extends CommandGroup {
+public class Shoot2 extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public AutoRetrivePlate() {
-    addSequential(new UpdateOdometryPos());
-    addSequential(new PosDrive(0, 0, Math.PI/2));
+  public Shoot2() {
+    addSequential(new Shoot());
+    addSequential(new CalibrateHolder());
   }
 }

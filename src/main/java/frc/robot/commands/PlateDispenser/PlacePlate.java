@@ -29,28 +29,23 @@ public class PlacePlate extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (timer.get() < 0.15){
-      Robot.platedispenser.extend();
-    } else if(timer.get() < 0.20){
+    if(Robot.platedispenser.status){
       Robot.platedispenser.release();
-    } else if(timer.get() < 0.25){
-      Robot.platedispenser.retract();
-    } else{
-      
+    }else{
+    Robot.platedispenser.extend();
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timer.get() > 0.35;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.platedispenser.hold();
-    Robot.platedispenser.retract();
+
   }
 
   // Called when another command which requires one or more of the same

@@ -17,11 +17,13 @@ import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Odometry.Odometry;
 import frc.robot.Triggers.GetChassisControl;
+import frc.robot.commands.Autonomous.AutoPlateLeft;
 import frc.robot.commands.Autonomous.AutoRetrivePlate;
 import frc.robot.commands.Chassis.BumpBack;
 import frc.robot.commands.Chassis.ClimbHigh;
@@ -66,7 +68,7 @@ public class Robot extends TimedRobot {
   public static Odometry odometry;
   Notifier odometry_notifier;
   Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<CommandGroup> m_chooser = new SendableChooser<>();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -122,6 +124,8 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     arduino.set(Status.kDISABLED);
     Scheduler.getInstance().run();
+    m_chooser.addDefault("Auto Left Plate", new AutoPlateLeft());
+    SmartDashboard.putData(m_chooser);
   }
 
   /**
@@ -139,14 +143,15 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    elevator.stop();
+    elevator.clearEncoder();//Only for tests
+    elevator.clearI();
+    new CalibrateHolder().start();
+    this.gyro.reset();
+    odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
+    odometry_notifier = new Notifier(odometry);
+    odometry_notifier.startPeriodic(0.02);
 
-    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.start();
     }
@@ -162,11 +167,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    if (m_autonomousCommand != null){
+    m_autonomousCommand.cancel();
+    }
     elevator.stop();
-    elevator.clearEncoder();//Only for tests
     elevator.clearI();
     new CalibrateHolder().start();
-    this.gyro.reset();
     odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
     odometry_notifier = new Notifier(odometry);
     odometry_notifier.startPeriodic(0.02);
@@ -184,13 +190,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     log();
-    double val = -oi.stick0.getRawAxis(3);
-
-    SmartDashboard.putData("0",new TurnTo(0));
-    SmartDashboard.putData("pi",new TurnTo(Math.PI/2));
-    SmartDashboard.putData("Climb Ready",new ElevateTo(1650));
     SmartDashboard.putData("ClimbHigh",new ClimbHigh());
-    SmartDashboard.putData("ClimbLow",new ClimbHigh());
     SmartDashboard.putData("RELEASEClimb",new ReleaseClimber());
     SmartDashboard.putData("LOCK_climb",new LockClimber());
     SmartDashboard.putData("LOCK_CHASSIS",new HoldChassis());
@@ -205,9 +205,6 @@ private void log(){
     SmartDashboard.putNumber("Heading",heading);
     SmartDashboard.putNumber("X",odometry.get()[0]);
     SmartDashboard.putNumber("Y",odometry.get()[1]);
-    SmartDashboard.putNumber("Tilt", gyro.getRoll());
-    double[] testarray = SmartDashboard.getNumberArray("testarray",new double[]{0});
-    SmartDashboard.putNumber("testNum",testarray[0]);
     SmartDashboard.putNumber("Chassis Current LEFT", chassis.getCurrent()[0]);
     SmartDashboard.putNumber("Chassis Current RIGHT", chassis.getCurrent()[1]);
   }

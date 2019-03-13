@@ -5,59 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Chassis;
+package frc.robot.commands.PlateDispenser;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.Arduino.Status;
 
-public class DefaultDrive extends Command {
-  public DefaultDrive() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.chassis);
+public class initPlate extends Command {
+  Timer timer = new Timer();
+  public initPlate() {
+    requires(Robot.platedispenser);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.arduino.set(Status.kREMOTE);
+    this.timer.reset();
+    this.timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    double inputx = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(2),0.1);
-    double inputy = Robot.chassis.deathZone(Robot.oi.stick0.getRawAxis(1),0.1);
-
-    if (inputx > 0.1){
-      inputx = (inputx - 0.1) * 1/0.9;
-    }else if(inputx < -0.1){
-      inputx = (inputx + 0.1) * 1/0.9;
+    if (timer.get() < 0.5){
+      Robot.platedispenser.hold();
     }else{
-      inputx = 0;
+      Robot.platedispenser.extend();
     }
-
-    inputx = Math.pow(Math.abs(inputx),2) * Math.signum(inputx);
-
-    Robot.chassis.arcadeDrive(-0.4*inputy, -inputx*0.2);
-    
-    double status = SmartDashboard.getNumber("status", 0);
-
-    if (status == 1){
-      Robot.arduino.set(Status.kFINDING);
-    }else{
-      Robot.arduino.set(Status.kREMOTE);
-    }
-    
   }
-
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return timer.get() > 0.8;
   }
 
   // Called once after isFinished returns true
@@ -69,6 +49,5 @@ public class DefaultDrive extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.arduino.set(Status.kAUTONOMOUS);
   }
 }

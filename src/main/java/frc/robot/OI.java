@@ -6,12 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Profiles.Profile1;
+import frc.robot.commands.Chassis.ClimbHigh;
+import frc.robot.commands.Chassis.ClimbLow;
 import frc.robot.commands.Chassis.ProfileDrive;
+import frc.robot.commands.Elevator.ElevateTo;
 import frc.robot.commands.Elevator.ReleaseClimber;
 import frc.robot.commands.Elevator.moveToDown;
 import frc.robot.commands.Elevator.moveToMid;
@@ -21,6 +23,7 @@ import frc.robot.commands.Intake_Holder.HolderToMid;
 import frc.robot.commands.Intake_Holder.HolderToUp;
 import frc.robot.commands.Intake_Holder.IntakeBall;
 import frc.robot.commands.Intake_Holder.Shoot;
+import frc.robot.commands.Intake_Holder.Shoot2;
 import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
 import frc.robot.commands.PlateDispenser.Release;
@@ -41,23 +44,32 @@ public class OI {
   // number it is.
 
   public Joystick stick0 = new Joystick(0);
+  public Joystick stick1 = new Joystick(1);
+  
 
-
-  public JoystickButton place = new JoystickButton(stick0, 1);
-  public JoystickButton extend = new JoystickButton(stick0, 5);
-  public JoystickButton retrive = new JoystickButton(stick0, 3);
-  public JoystickButton ElevatorUp = new JoystickButton(stick0, 7);
-  public JoystickButton ElevatorMid = new JoystickButton(stick0, 9);
-  public JoystickButton ElevatorDown = new JoystickButton(stick0, 11);
-  public JoystickButton HolderUp = new JoystickButton(stick0, 8);
-  public JoystickButton HolderMid = new JoystickButton(stick0, 10);
-  public JoystickButton HolderDown = new JoystickButton(stick0, 12);
   public JoystickButton intake = new JoystickButton(stick0, 2);
-  public JoystickButton shoot = new JoystickButton(stick0, 6);
-  public JoystickButton RetrivePlate = new JoystickButton(stick0, 4);
+  public JoystickButton climbLow = new JoystickButton(stick0, 11);
+  public JoystickButton climbHigh = new JoystickButton(stick0, 7);
 
+
+  public JoystickButton extend = new JoystickButton(stick1, 5);
+  public JoystickButton retrive = new JoystickButton(stick1, 3);
+  public JoystickButton ElevatorUp = new JoystickButton(stick1, 7);
+  public JoystickButton ElevatorMid = new JoystickButton(stick1, 9);
+  public JoystickButton ElevatorDown = new JoystickButton(stick1, 11);
+  public JoystickButton HolderUp = new JoystickButton(stick1, 8);
+  public JoystickButton HolderMid = new JoystickButton(stick1, 10);
+  public JoystickButton HolderDown = new JoystickButton(stick1, 12);
+  
+  public JoystickButton shoot = new JoystickButton(stick1, 6);
+  public JoystickButton cargo = new JoystickButton(stick1, 4);
+  public JoystickButton RetrivePlate = new JoystickButton(stick1, 2);
+  public JoystickButton place = new JoystickButton(stick1, 1);
   OI(){
 
+    climbHigh.whenPressed(new ClimbHigh());
+    climbLow.whenPressed(new ClimbLow());
+    
     //test joystick
     ElevatorUp.whenPressed(new moveToUp());
     ElevatorMid.whenPressed(new moveToMid());
@@ -70,7 +82,8 @@ public class OI {
     retrive.whenPressed(new PusherIn());
     intake.whenPressed(new IntakeBall());
     RetrivePlate.whenPressed(new RetrievePlate());
-    shoot.whenPressed(new Shoot());
+    shoot.whenPressed(new Shoot2());
+    cargo.whenPressed(new ElevateTo(RobotMap.ELEVATOR_CARGO_POS));
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
