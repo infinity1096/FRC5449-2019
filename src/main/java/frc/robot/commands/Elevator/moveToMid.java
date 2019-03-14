@@ -35,15 +35,22 @@ public class moveToMid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevator.ProfileToPoosition(RobotMap.ELEVATOR_MID_POS);
+    if (Robot.platedispenser.status){
+      Robot.elevator.ProfileToPoosition(RobotMap.ELEVATOR_MID_POS + 150);
+    }else{
+      Robot.elevator.ProfileToPoosition(RobotMap.ELEVATOR_MID_POS);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_MID_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    if (!Robot.platedispenser.status){
+      return Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_MID_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    }else{
+      return Math.abs(Robot.elevator.getPosition() - (RobotMap.ELEVATOR_MID_POS+150)) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    }
   }
-
   // Called once after isFinished returns true
   @Override
   protected void end() {

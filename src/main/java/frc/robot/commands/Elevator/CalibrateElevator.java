@@ -5,46 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.PlateDispenser;
+package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class RetrievePlate extends Command {
+public class CalibrateElevator extends Command {
   Timer timer = new Timer();
 
-  public RetrievePlate() {
-    requires(Robot.platedispenser);
+  public CalibrateElevator() {
+    requires(Robot.elevator);
+    this.accum = 0;
   }
-
+  private double accum = 0;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-   //Robot.platedispenser.release();
-   // Robot.platedispenser.extend();
-    this.timer.reset();
-    this.timer.start();
+    Robot.elevator.move(-0.2);
+    timer.reset();
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.platedispenser.retract();
-    Robot.platedispenser.hold();
+    accum += 0.02 * Math.max(Robot.elevator.getelevatorCurrent()[0]-RobotMap.ELEVATOR_CALIBRATION_AMP_THRESHOLD,0);
+    System.out.println(Robot.elevator.getelevatorCurrent()[0]);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return Robot.platedispenser.get()[0] && Robot.platedispenser.get()[1];
-    return true;
+    return this.accum > RobotMap.ELEVATOR_CALIBRATION_ACCUM_THRESHOLD;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    }
+    Robot.elevator.stop();
+    Robot.elevator.clearEncoder();
+
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

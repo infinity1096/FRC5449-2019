@@ -5,17 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Intake_Holder;
+package frc.robot.commands.Chassis;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.Common.Delay;
+import frc.robot.commands.Common.WaitHorizontal;
+import frc.robot.commands.Elevator.LockClimber;
+import frc.robot.commands.Elevator.ElevateTo;
+import frc.robot.commands.Elevator.ReleaseClimber;
+import frc.robot.commands.Elevator.moveToDown;
+import frc.robot.commands.Pusher.PusherIn;
+import frc.robot.commands.Pusher.PusherOut;
 
-public class Shoot2 extends CommandGroup {
+public class PrepClimbHigh extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Shoot2() {
-    addSequential(new Shoot());
-    addSequential(new HolderToDown());
-    addSequential(new CalibrateHolder());
+  public PrepClimbHigh() {
+    addSequential(new ElevateTo(1650));
+    addSequential(new ReleaseClimber());
   }
 }

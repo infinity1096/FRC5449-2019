@@ -5,17 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Intake_Holder;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.Chassis.PosDrive;
+import frc.robot.commands.Elevator.moveToDown;
+import frc.robot.commands.PlateDispenser.PlacePlate;
+import frc.robot.commands.PlateDispenser.initPlate;
 
-public class Shoot2 extends CommandGroup {
+public class AutoEmpty extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public Shoot2() {
-    addSequential(new Shoot());
-    addSequential(new HolderToDown());
-    addSequential(new CalibrateHolder());
+  public AutoEmpty() {
+
   }
 }

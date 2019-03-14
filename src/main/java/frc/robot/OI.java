@@ -10,10 +10,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Profiles.Profile1;
+import frc.robot.commands.Autonomous.RemoteInit;
 import frc.robot.commands.Chassis.ClimbHigh;
 import frc.robot.commands.Chassis.ClimbLow;
+import frc.robot.commands.Chassis.PrepClimbHigh;
 import frc.robot.commands.Chassis.ProfileDrive;
 import frc.robot.commands.Elevator.ElevateTo;
+import frc.robot.commands.Elevator.ElevateTo_NEW;
 import frc.robot.commands.Elevator.ReleaseClimber;
 import frc.robot.commands.Elevator.moveToDown;
 import frc.robot.commands.Elevator.moveToMid;
@@ -31,6 +34,7 @@ import frc.robot.commands.PlateDispenser.Retract;
 import frc.robot.commands.PlateDispenser.RetrievePlate;
 import frc.robot.commands.Pusher.PusherIn;
 import frc.robot.commands.Pusher.PusherOut;
+import frc.robot.subsystems.Elevator;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -49,7 +53,9 @@ public class OI {
 
   public JoystickButton intake = new JoystickButton(stick0, 2);
   public JoystickButton climbLow = new JoystickButton(stick0, 11);
+  
   public JoystickButton climbHigh = new JoystickButton(stick0, 7);
+  public JoystickButton prepClimbHigh = new JoystickButton(stick0, 9);
 
 
   public JoystickButton extend = new JoystickButton(stick1, 5);
@@ -57,7 +63,7 @@ public class OI {
   public JoystickButton ElevatorUp = new JoystickButton(stick1, 7);
   public JoystickButton ElevatorMid = new JoystickButton(stick1, 9);
   public JoystickButton ElevatorDown = new JoystickButton(stick1, 11);
-  public JoystickButton HolderUp = new JoystickButton(stick1, 8);
+  public JoystickButton RemoteInitialie = new JoystickButton(stick1, 8);
   public JoystickButton HolderMid = new JoystickButton(stick1, 10);
   public JoystickButton HolderDown = new JoystickButton(stick1, 12);
   
@@ -69,12 +75,14 @@ public class OI {
 
     climbHigh.whenPressed(new ClimbHigh());
     climbLow.whenPressed(new ClimbLow());
+    prepClimbHigh.whenActive(new PrepClimbHigh());
     
     //test joystick
-    ElevatorUp.whenPressed(new moveToUp());
-    ElevatorMid.whenPressed(new moveToMid());
-    ElevatorDown.whenPressed(new moveToDown());
-    HolderUp.whenPressed(new HolderToUp());
+    ElevatorUp.whenPressed(new ElevateTo_NEW(RobotMap.ELEVATOR_UP_POS));
+    ElevatorMid.whenPressed(new ElevateTo_NEW(RobotMap.ELEVATOR_MID_POS));
+    ElevatorDown.whenPressed(new ElevateTo_NEW(RobotMap.ELEVATOR_DOWN_POS));
+
+    RemoteInitialie.whenPressed(new RemoteInit());
     HolderMid.whenPressed(new HolderToMid());
     HolderDown.whenPressed(new HolderToDown());    
     place.whenPressed(new PlacePlate());

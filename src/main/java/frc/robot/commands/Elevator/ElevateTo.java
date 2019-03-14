@@ -38,14 +38,22 @@ public class ElevateTo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevator.ProfileToPoosition(this.targetPos);
+    if (Robot.platedispenser.status){
+      Robot.elevator.ProfileToPoosition(this.targetPos+150);
+    }else{
+      Robot.elevator.ProfileToPoosition(this.targetPos);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Math.abs(Robot.elevator.getPosition() - this.targetPos) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
-  }
+    if (!Robot.platedispenser.status){
+      return Math.abs(Robot.elevator.getPosition() - this.targetPos) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    }else{
+      return Math.abs(Robot.elevator.getPosition() - (this.targetPos+150)) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+    }
+    }
 
   // Called once after isFinished returns true
   @Override

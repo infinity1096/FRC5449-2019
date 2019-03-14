@@ -72,8 +72,8 @@ public class RobotMap {
   public static final double CHASSIS_POSDRIVE_TURN_D_LIMIT = 0.2;
   public static final double CHASSIS_POSDRIVE_TURN_I_LIMIT = 0.1;
   public static final double CHASSIS_POSDRIVE_MOVE_I_LIMIT = 0.2;
-  public static final double CHASSIS_POSDRIVE_KA = 0.4;//KA - KP > 0
-  public static final double CHASSIS_POSDRIVE_KB = -0.2;//KB < 0
+  public static final double CHASSIS_POSDRIVE_KA = 0.5;//KA - KP > 0
+  public static final double CHASSIS_POSDRIVE_KB = -0.12;//KB < 0
   public static final double CHASSIS_POSDRIVE_KD = 0.03;
     //TurnTo
     public static final double CHASSIS_POSDRIVE_TURN_I = 0.01;
@@ -92,7 +92,10 @@ public class RobotMap {
     public static final double ELEVATOR_MID_POS = 1192;
     public static final double ELEVATOR_UP_POS = 1902;
     public static final double ELEVATOR_CARGO_POS = 780;
-    public static final double ELEVATOR_AllOWABLE_ERROR = 20;//this value remains to be determined
+    public static final double ELEVATOR_AllOWABLE_ERROR = 40;//this value remains to be determined
+    public static final double ELEVATOR_CALIBRATION_ACCUM_THRESHOLD = 0.5; //Amp * Sec
+    public static final double ELEVATOR_CALIBRATION_AMP_THRESHOLD = 7;//Amp
+
 //Holder
   //hardware Parameters
     public static final double HOLDER_ENCODERUNIT_TO_DEG_COEFF = 0.3271;

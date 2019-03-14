@@ -7,6 +7,7 @@
 
 package frc.robot.commands.Chassis;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -26,19 +27,34 @@ public class PosDrive extends Command {
   private double ki_turn_accum = 0;
   private double ki_move_accum = 0;
 
+  private double timeout = 100;
+
+  private Timer timer = new Timer();
+
+
+  public PosDrive(double targetx, double targety, double targettheta,double timeout) {
+    this.target = new double[] { targetx, targety, targettheta};
+    requires(Robot.chassis);
+    this.timeout = timeout;
+  }
+
   public PosDrive(double targetx, double targety, double targettheta) {
     this.target = new double[] { targetx, targety, targettheta};
     requires(Robot.chassis);
+    this.timeout = 100;
   }
 
   public PosDrive(double[] target) {
     this.target = target.clone();
     requires(Robot.chassis);
+    this.timeout = 100;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    this.timer.reset();
+    this.timer.start();
     this.RobotPos[0] = Robot.odometry.get()[0];
     this.RobotPos[1] = Robot.odometry.get()[1];
     double heading;
@@ -150,7 +166,7 @@ public class PosDrive extends Command {
     heading = Math.atan2(Math.sin(heading), Math.cos(heading));
     this.RobotPos[2] = heading;
     double p = Math.hypot(target[0] - RobotPos[0], target[1] - RobotPos[1]);
-    return (Math.abs(p) < 0.05 && Math.abs(heading - target[2]) < 0.05);
+    return (Math.abs(p) < 0.05 && Math.abs(heading - target[2]) < 0.05) || timer.get() > this.timeout;
   }
 
   // Called once after isFinished returns true

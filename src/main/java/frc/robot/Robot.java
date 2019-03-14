@@ -23,18 +23,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Odometry.Odometry;
 import frc.robot.Triggers.GetChassisControl;
+import frc.robot.commands.Autonomous.AutoEmpty;
 import frc.robot.commands.Autonomous.AutoPlateLeft;
+import frc.robot.commands.Autonomous.AutoPlateMid;
+import frc.robot.commands.Autonomous.AutoPlateRight;
 import frc.robot.commands.Autonomous.AutoRetrivePlate;
+import frc.robot.commands.Autonomous.AutonomousInit;
 import frc.robot.commands.Chassis.BumpBack;
 import frc.robot.commands.Chassis.ClimbHigh;
 import frc.robot.commands.Chassis.HoldChassis;
 import frc.robot.commands.Chassis.PosDrive;
+import frc.robot.commands.Chassis.PrepClimbHigh;
 import frc.robot.commands.Chassis.TurnTo;
+import frc.robot.commands.Elevator.CalibrateElevator;
 import frc.robot.commands.Elevator.ElevateTo;
+import frc.robot.commands.Elevator.ElevateTo_NEW;
 import frc.robot.commands.Elevator.LockClimber;
 import frc.robot.commands.Elevator.ReleaseClimber;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
 import frc.robot.commands.Odometry.UpdateOdometryPos;
+import frc.robot.commands.PlateDispenser.RetractPH;
+import frc.robot.commands.PlateDispenser.initPlate;
 import frc.robot.subsystems.Arduino;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Elevator;
@@ -68,7 +77,9 @@ public class Robot extends TimedRobot {
   public static Odometry odometry;
   Notifier odometry_notifier;
   Command m_autonomousCommand;
+  CameraServer server;
   SendableChooser<CommandGroup> m_chooser = new SendableChooser<>();
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -76,20 +87,21 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     getchassiscontrol.whenActive(new HoldChassis());
-    //CameraServer.getInstance().startAutomaticCapture();
-    /*
-    Timer timer = new Timer();
-    timer.reset();
-    timer.start();
-    pfr.Setaddress("home/lvuser/frc/Profile.csv");
-    new Thread(pfr).start();
-    while(!pfr.is_finished()){
-    }
-    timer.stop();
-    System.out.println("Time" + String.valueOf(timer.get()));
-    System.out.println("Count" + String.valueOf(pfr.getCount()));
-    SmartDashboard.putData("Auto mode", m_chooser);
-    */
+    server = CameraServer.getInstance();
+
+    UsbCamera camera_F = new UsbCamera("USB Camera 0",0);
+    //UsbCamera camera_B = new UsbCamera("USB Camera 1",1);
+
+    server.addCamera(camera_F);
+    //server.addCamera(camera_B);
+
+    server.startAutomaticCapture(camera_F);
+    //server.startAutomaticCapture(camera_B);
+    m_chooser.addDefault("Auto Right Plate", new AutoPlateRight());
+    m_chooser.addOption("Auto Left Plate", new AutoPlateLeft());
+    m_chooser.addOption("Empty Auto",new AutoEmpty());
+    m_chooser.addOption("AUTO MID", new AutoPlateMid());
+    SmartDashboard.putData(m_chooser);
     //Notifier notifier = new Notifier(om);
     //notifier.startPeriodic(0.02);
 
@@ -124,7 +136,10 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     arduino.set(Status.kDISABLED);
     Scheduler.getInstance().run();
-    m_chooser.addDefault("Auto Left Plate", new AutoPlateLeft());
+    m_chooser.addDefault("Auto Right Plate", new AutoPlateRight());
+    m_chooser.addOption("Auto Left Plate", new AutoPlateLeft());
+    m_chooser.addOption("Empty Auto",new AutoEmpty());
+    m_chooser.addOption("AUTO MID", new AutoPlateMid());
     SmartDashboard.putData(m_chooser);
   }
 
@@ -167,16 +182,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    SmartDashboard.putData(m_chooser);
     if (m_autonomousCommand != null){
     m_autonomousCommand.cancel();
     }
     elevator.stop();
     elevator.clearI();
-    new CalibrateHolder().start();
     odometry = new Odometry(0.02, chassis.getEncoderValue()[0][0], chassis.getEncoderValue()[0][1]);
     odometry_notifier = new Notifier(odometry);
     odometry_notifier.startPeriodic(0.02);
-
   }
 
   /**
@@ -190,12 +204,18 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     log();
+    SmartDashboard.putData("Plate",new initPlate());
+    SmartDashboard.putData("Reset Holder",new CalibrateHolder());
     SmartDashboard.putData("ClimbHigh",new ClimbHigh());
+    SmartDashboard.putData("PREP ClimbHigh",new PrepClimbHigh());
     SmartDashboard.putData("RELEASEClimb",new ReleaseClimber());
     SmartDashboard.putData("LOCK_climb",new LockClimber());
     SmartDashboard.putData("LOCK_CHASSIS",new HoldChassis());
     SmartDashboard.putData("Auto Plate",new AutoRetrivePlate());
     SmartDashboard.putData("Update Odometry",new UpdateOdometryPos());
+    SmartDashboard.putData("CALIBRATE ELEVATOR",new CalibrateElevator());
+    SmartDashboard.putData("Retract PH",new RetractPH());
+    SmartDashboard.putData("test High",new AutonomousInit());
   }
 
 

@@ -5,46 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.PlateDispenser;
+package frc.robot.commands.Intake_Holder;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class RetrievePlate extends Command {
-  Timer timer = new Timer();
+public class InitHolderIntake extends Command {
+  private Timer timer = new Timer();
 
-  public RetrievePlate() {
-    requires(Robot.platedispenser);
+  public InitHolderIntake() {
+    requires(Robot.holder);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-   //Robot.platedispenser.release();
-   // Robot.platedispenser.extend();
-    this.timer.reset();
-    this.timer.start();
+    timer.reset();
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.platedispenser.retract();
-    Robot.platedispenser.hold();
+    if (timer.get()  < 1){
+      Robot.holder.move(0.2);
+    }else{
+      Robot.holder.move(-0.2);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return Robot.platedispenser.get()[0] && Robot.platedispenser.get()[1];
-    return true;
+    return timer.get() > 2;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    }
+    Robot.holder.stopHolder();
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

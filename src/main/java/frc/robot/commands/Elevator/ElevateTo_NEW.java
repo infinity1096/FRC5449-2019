@@ -8,22 +8,26 @@
 package frc.robot.commands.Elevator;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 
-public class moveToUp extends Command {
+public class ElevateTo_NEW extends Command {
 
   private boolean doHold = true;
+  private double targetPos = 0;
+  private double actualTarget = 0;
 
   //constructers
-  public moveToUp() {
+  public ElevateTo_NEW(double pos) {
     requires(Robot.elevator);
     this.doHold = true;
+    this.targetPos = pos;
   }
 
-  public moveToUp(boolean hold) {
+  public ElevateTo_NEW(double pos, boolean hold) {
     requires(Robot.elevator);
     this.doHold = hold;
+    this.targetPos = pos;
   } 
 
   // Called just before this Command runs the first time
@@ -36,21 +40,43 @@ public class moveToUp extends Command {
   @Override
   protected void execute() {
     if (Robot.platedispenser.status){
-      Robot.elevator.ProfileToPoosition(RobotMap.ELEVATOR_UP_POS + 150);
+      actualTarget = targetPos+150;
     }else{
-      Robot.elevator.ProfileToPoosition(RobotMap.ELEVATOR_UP_POS);
+      actualTarget = targetPos;
+    }
+    if (Math.abs(actualTarget - Robot.elevator.getPosition()) > 300){
+      Robot.elevator.ProfileToPoosition(this.actualTarget);
+      System.out.println("mode: profile");
+      SmartDashboard.putNumber("error2",actualTarget - Robot.elevator.getPosition());
+    }else{
+      //DO PID CONTROL
+      double error = (actualTarget) - Robot.elevator.getPosition();
+      double output = 0.10 + error * 0.005;
+      output = range(output, 0.2, -0.2);
+      System.out.println(error);
+      Robot.elevator.move(output);
     }
   }
+  public double range(double value, double max, double min){
+    double finalValue = 0.0;
+    if(value > max ){
+      finalValue = max;
+    }
 
+    else if(value < min){
+      finalValue = min;
+    }
+    else{
+      finalValue = value;
+    }
+   
+    return finalValue;
+}
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (!Robot.platedispenser.status){
-      return Math.abs(Robot.elevator.getPosition() - RobotMap.ELEVATOR_UP_POS) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
-    }else{
-      return Math.abs(Robot.elevator.getPosition() - (RobotMap.ELEVATOR_UP_POS+150)) <= RobotMap.ELEVATOR_AllOWABLE_ERROR;
+      return false;
     }
-  }
 
   // Called once after isFinished returns true
   @Override

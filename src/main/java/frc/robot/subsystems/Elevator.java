@@ -78,7 +78,7 @@ public class Elevator extends Subsystem {
 
 
   //get sensor readings
-  public double[] getOutput(){
+  public double[] getelevatorCurrent(){
     double[] results={0,0};
     results[0]=l1.getOutputCurrent()+l2.getOutputCurrent();
     results[1]=r1.getOutputCurrent()+r2.getOutputCurrent();

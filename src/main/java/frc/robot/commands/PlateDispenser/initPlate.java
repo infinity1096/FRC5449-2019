@@ -29,6 +29,7 @@ public class initPlate extends Command {
   protected void execute() {
     if (timer.get() < 0.5){
       Robot.platedispenser.hold();
+      
     }else{
       Robot.platedispenser.extend();
     }
@@ -37,7 +38,7 @@ public class initPlate extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return timer.get() > 0.8;
+    return timer.get() > 0.7;
   }
 
   // Called once after isFinished returns true

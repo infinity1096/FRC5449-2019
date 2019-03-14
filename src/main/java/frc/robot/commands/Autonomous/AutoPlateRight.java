@@ -5,31 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Chassis;
+package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.RobotMap;
+import frc.robot.commands.Chassis.Drive;
+import frc.robot.commands.Chassis.PosDrive;
+import frc.robot.commands.Chassis.TurnTo;
 import frc.robot.commands.Common.Delay;
-import frc.robot.commands.Common.WaitHorizontal;
-import frc.robot.commands.Elevator.LockClimber;
 import frc.robot.commands.Elevator.ElevateTo;
-import frc.robot.commands.Elevator.ReleaseClimber;
+import frc.robot.commands.Elevator.ElevateTo_NEW;
 import frc.robot.commands.Elevator.moveToDown;
-import frc.robot.commands.Pusher.PusherIn;
-import frc.robot.commands.Pusher.PusherOut;
+import frc.robot.commands.PlateDispenser.PlacePlate;
+import frc.robot.commands.PlateDispenser.initPlate;
 
-public class ClimbHigh extends CommandGroup {
+public class AutoPlateRight extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ClimbHigh() {
-    addParallel(new Drive(-0.2));
-    addSequential(new moveToDown());
-    addSequential(new PusherOut());
-    addSequential(new WaitHorizontal());
-    addSequential(new Delay(1));
-    addParallel(new ElevateTo(700));
-    addSequential(new Delay(0.4));
-    addParallel(new Drive(0,true));
-    addSequential(new PusherIn());
+  public AutoPlateRight() {
+    addSequential(new AutonomousInit());
+    addSequential(new PosDrive(0.057658,-1.5144,Math.PI/2));
+    addSequential(new PosDrive(1.9809,-2.7101,Math.PI*2/3));
+    addParallel(new ElevateTo_NEW(RobotMap.ELEVATOR_DOWN_POS));
+    addSequential(new PosDrive(2.2989,-3.4386,Math.PI*2/3));
   }
 }

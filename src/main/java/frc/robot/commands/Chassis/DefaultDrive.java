@@ -41,7 +41,7 @@ public class DefaultDrive extends Command {
 
     inputx = Math.pow(Math.abs(inputx),2) * Math.signum(inputx);
 
-    Robot.chassis.arcadeDrive(-0.4*inputy, -inputx*0.2);
+    Robot.chassis.arcadeDrive(-0.7*inputy, -inputx*0.2);
     
     double status = SmartDashboard.getNumber("status", 0);
 
