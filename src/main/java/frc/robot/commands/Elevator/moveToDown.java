@@ -59,4 +59,5 @@ public class moveToDown extends Command {
   @Override
   protected void interrupted() {
   }
+
 }

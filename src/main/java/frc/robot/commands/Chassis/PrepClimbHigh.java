@@ -22,7 +22,7 @@ public class PrepClimbHigh extends CommandGroup {
    * Add your docs here.
    */
   public PrepClimbHigh() {
-    addSequential(new ElevateTo(1650));
+    addSequential(new ElevateTo(1630));
     addSequential(new ReleaseClimber());
   }
 }

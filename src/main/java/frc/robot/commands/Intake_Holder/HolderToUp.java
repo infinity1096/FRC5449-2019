@@ -37,17 +37,18 @@ public class HolderToUp extends Command {
   @Override
   protected void execute() {
 
-    comp = 0.125 * Math.cos(Math.toRadians(83 + Robot.holder.getPosition()));
+    comp = 0.13 * Math.cos(Math.toRadians(83 + Robot.holder.getPosition()));
     error = RobotMap.HOLDER_UP_POSITION - Robot.holder.getPosition();
     System.out.println(error);
     double P,I,D;
-    P = 7;
+    P = 5;
     D = 9;//12
     I = 0.003;//0.0014
     SmartDashboard.putNumber("error", error);
     double output = P * error + -D * Robot.holder.getSpeed() + I * this.accum;
     output /= 1023;
     output += comp;
+    output = range(output, 0.4, -0.4);
     Robot.holder.move(output);
     if (Math.abs(error) < 10){
       this.accum += 20 * error;
@@ -81,4 +82,19 @@ public class HolderToUp extends Command {
   @Override
   protected void interrupted() {
   }
+  public double range(double value, double max, double min){
+    double finalValue = 0.0;
+    if(value > max ){
+      finalValue = max;
+    }
+
+    else if(value < min){
+      finalValue = min;
+    }
+    else{
+      finalValue = value;
+    }
+   
+    return finalValue;
+}
 }

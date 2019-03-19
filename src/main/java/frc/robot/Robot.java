@@ -12,6 +12,8 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.UsbCameraInfo;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Odometry.Odometry;
+import frc.robot.Odometry.UpdateOdometryPos;
 import frc.robot.Triggers.GetChassisControl;
 import frc.robot.commands.Autonomous.AutoEmpty;
 import frc.robot.commands.Autonomous.AutoPlateLeft;
@@ -41,7 +44,6 @@ import frc.robot.commands.Elevator.ElevateTo_NEW;
 import frc.robot.commands.Elevator.LockClimber;
 import frc.robot.commands.Elevator.ReleaseClimber;
 import frc.robot.commands.Intake_Holder.CalibrateHolder;
-import frc.robot.commands.Odometry.UpdateOdometryPos;
 import frc.robot.commands.PlateDispenser.RetractPH;
 import frc.robot.commands.PlateDispenser.initPlate;
 import frc.robot.subsystems.Arduino;
@@ -77,7 +79,7 @@ public class Robot extends TimedRobot {
   public static Odometry odometry;
   Notifier odometry_notifier;
   Command m_autonomousCommand;
-  CameraServer server;
+  
   SendableChooser<CommandGroup> m_chooser = new SendableChooser<>();
 
   /**
@@ -86,26 +88,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    getchassiscontrol.whenActive(new HoldChassis());
-    server = CameraServer.getInstance();
 
-    UsbCamera camera_F = new UsbCamera("USB Camera 0",0);
-    //UsbCamera camera_B = new UsbCamera("USB Camera 1",1);
 
-    server.addCamera(camera_F);
-    //server.addCamera(camera_B);
-
-    server.startAutomaticCapture(camera_F);
+    
+  CameraServer.getInstance().startAutomaticCapture();  
     //server.startAutomaticCapture(camera_B);
-    m_chooser.addDefault("Auto Right Plate", new AutoPlateRight());
+    m_chooser.addOption("Auto Right Plate", new AutoPlateRight());
     m_chooser.addOption("Auto Left Plate", new AutoPlateLeft());
-    m_chooser.addOption("Empty Auto",new AutoEmpty());
+    m_chooser.addDefault("Empty Auto",new AutoEmpty());
     m_chooser.addOption("AUTO MID", new AutoPlateMid());
     SmartDashboard.putData(m_chooser);
-    //Notifier notifier = new Notifier(om);
-    //notifier.startPeriodic(0.02);
 
-  }
+    }
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -136,9 +130,9 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     arduino.set(Status.kDISABLED);
     Scheduler.getInstance().run();
-    m_chooser.addDefault("Auto Right Plate", new AutoPlateRight());
+    m_chooser.addOption("Auto Right Plate", new AutoPlateRight());
     m_chooser.addOption("Auto Left Plate", new AutoPlateLeft());
-    m_chooser.addOption("Empty Auto",new AutoEmpty());
+    m_chooser.addDefault("Empty Auto",new AutoEmpty());
     m_chooser.addOption("AUTO MID", new AutoPlateMid());
     SmartDashboard.putData(m_chooser);
   }
@@ -156,8 +150,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
+    //m_autonomousCommand = m_chooser.getSelected();
+    m_autonomousCommand = new AutoPlateMid();
     elevator.stop();
     elevator.clearEncoder();//Only for tests
     elevator.clearI();
@@ -212,10 +206,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("LOCK_climb",new LockClimber());
     SmartDashboard.putData("LOCK_CHASSIS",new HoldChassis());
     SmartDashboard.putData("Auto Plate",new AutoRetrivePlate());
-    SmartDashboard.putData("Update Odometry",new UpdateOdometryPos());
+    SmartDashboard.putData("Update Odometry",new frc.robot.Odometry.UpdateOdometryPos());
     SmartDashboard.putData("CALIBRATE ELEVATOR",new CalibrateElevator());
     SmartDashboard.putData("Retract PH",new RetractPH());
     SmartDashboard.putData("test High",new AutonomousInit());
+    SmartDashboard.putData("Vision Test - Update Odometry",new UpdateOdometryPos());
   }
 
 

@@ -38,12 +38,14 @@ public class CalibrateHolder extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    System.out.println(accum);
     return this.accum > RobotMap.HOLDER_CALIBRATION_ACCUM_THRESHOLD;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    this.accum = 0;
     Robot.holder.stopHolder();
     Robot.holder.resetEncoder(RobotMap.HOLDER_CALIBRATE_OFFSET);
     Robot.holder.calibrated();

@@ -16,14 +16,16 @@ import frc.robot.RobotMap;
 
 public class IntakeBall extends Command {
   Timer timer = new Timer();
+  boolean isIn = false;
+  double intime = 0;
   double accum = 0;
   public IntakeBall() {
     requires(Robot.holder);
     requires(Robot.intake);
     accum = 0;
-
+    this.intime = 0;
+    this.isIn = false;
   }
-
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -36,11 +38,13 @@ public class IntakeBall extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.holder.inTake();
-    Robot.intake.takeIn();
+
 
     accum += 0.02 * Math.max(Robot.holder.getShooterCurrent()-RobotMap.HOLDER_INTAKE_AMP_THRESHOLD,0);
-
+    
+      Robot.holder.inTake();
+      Robot.intake.takeIn();
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -60,6 +64,7 @@ public class IntakeBall extends Command {
     Robot.holder.hold();
     }else{
       Robot.holder.stop();
+      Robot.intake.stopIntake();
     }
   }
 

@@ -19,6 +19,8 @@ import frc.robot.commands.Chassis.DefaultDrive;
 
 public class Chassis extends Subsystem {
 
+  public boolean isVision = false;
+
   private CANSparkMax lf = new CANSparkMax(RobotMap.CHASSIS_LF_MOTOR_PORT,MotorType.kBrushless);
   private CANSparkMax lm = new CANSparkMax(RobotMap.CHASSIS_LM_MOTOR_PORT,MotorType.kBrushless);
   private CANSparkMax lr = new CANSparkMax(RobotMap.CHASSIS_LR_MOTOR_PORT,MotorType.kBrushless);
@@ -31,10 +33,10 @@ public class Chassis extends Subsystem {
 
   public Chassis(){
     
-
-    lm.follow(lf);
+    isVision = false;
+    //lm.follow(lf);
     lr.follow(lf);
-    rm.follow(rf);
+    //rm.follow(rf);
     rr.follow(rf);
     lf.setInverted(true);
     lm.setInverted(true);
@@ -43,10 +45,10 @@ public class Chassis extends Subsystem {
     rm.setInverted(false);
     rr.setInverted(false);
     lf.setIdleMode(IdleMode.kBrake);
-    lm.setIdleMode(IdleMode.kBrake);
+    lm.setIdleMode(IdleMode.kCoast);
     lr.setIdleMode(IdleMode.kBrake);
     rf.setIdleMode(IdleMode.kBrake);
-    rm.setIdleMode(IdleMode.kBrake);
+    rm.setIdleMode(IdleMode.kCoast);
     rr.setIdleMode(IdleMode.kBrake);
     
 

@@ -91,7 +91,7 @@ public class RobotMap {
     public static final double ELEVATOR_DOWN_POS = ELEVATOR_MILIMETERS_OFFSET;
     public static final double ELEVATOR_MID_POS = 1192;
     public static final double ELEVATOR_UP_POS = 1902;
-    public static final double ELEVATOR_CARGO_POS = 780;
+    public static final double ELEVATOR_CARGO_POS = 830;
     public static final double ELEVATOR_AllOWABLE_ERROR = 40;//this value remains to be determined
     public static final double ELEVATOR_CALIBRATION_ACCUM_THRESHOLD = 0.5; //Amp * Sec
     public static final double ELEVATOR_CALIBRATION_AMP_THRESHOLD = 7;//Amp
@@ -101,14 +101,14 @@ public class RobotMap {
     public static final double HOLDER_ENCODERUNIT_TO_DEG_COEFF = 0.3271;
     public static final int HOLDER_CALIBRATE_OFFSET = -106;
   //Software Parameters
-    public static final double HOLDER_OUT_POWER = -1.0;
+    public static final double HOLDER_OUT_POWER = -0.90;
     public static final double HOLDER_IN_POWER =  0.5;
     public static final long HOLDER_UP_POSITION = 20;
-    public static final long HOLDER_MID_POSITION = 10;
+    public static final long HOLDER_MID_POSITION = 14;
     public static final long HOLDER_DOWN_POSITION = -90;
     
     public static final double HOLDER_ALLOWABLE_ERROR = 3;
-    public static final double HOLDER_CALIBRATION_AMP_THRESHOLD = 1.5;//Amp
+    public static final double HOLDER_CALIBRATION_AMP_THRESHOLD = 1.2;//Amp
     public static final double HOLDER_CALIBRATION_ACCUM_THRESHOLD = 0.25;//Amp * sec
 
     public static final double HOLDER_INTAKE_AMP_THRESHOLD = 10; //Amp

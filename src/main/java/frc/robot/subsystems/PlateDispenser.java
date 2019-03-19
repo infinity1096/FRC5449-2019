@@ -44,11 +44,11 @@ public class PlateDispenser extends Subsystem {
   }
 
   public void hold(){
-    this.holder.set(true);
+    this.holder.set(false);
   }
 
   public void release(){
-    this.holder.set(false);
+    this.holder.set(true);
   }
 
 

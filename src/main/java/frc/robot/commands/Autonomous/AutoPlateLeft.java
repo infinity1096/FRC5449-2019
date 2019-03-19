@@ -24,17 +24,12 @@ public class AutoPlateLeft extends CommandGroup {
    */
   public AutoPlateLeft() {
     addSequential(new AutonomousInit());
-    addSequential(new PosDrive(-0.057658,-1.5144,Math.PI/2));
-    addSequential(new PosDrive(-1.9809,-2.7101,Math.PI/3));
     addParallel(new ElevateTo_NEW(RobotMap.ELEVATOR_DOWN_POS));
-    addSequential(new PosDrive(-2.2989,-3.4386,Math.PI/3,5));
-    addSequential(new TurnTo(Math.PI/3));
     addParallel(new Drive(-0.2));
     addSequential(new Delay(2));
-    addSequential(new PlacePlate());
-    addSequential(new Delay(0.5));
-    addParallel(new Drive(0.2));
-    addSequential(new Delay(2));
-    addSequential(new PosDrive(-1.7989,0,-Math.PI/2));
+    addSequential(new PosDrive(-1.8309,-2.7101,Math.PI/3));
+    //addSequential(new PosDrive(-2.1989,-3.4386,Math.PI/3,5));
+    addSequential(new TurnTo(Math.PI/3));
+    
   }
 }

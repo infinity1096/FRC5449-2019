@@ -46,14 +46,14 @@ public class ElevateTo_NEW extends Command {
     }
     if (Math.abs(actualTarget - Robot.elevator.getPosition()) > 300){
       Robot.elevator.ProfileToPoosition(this.actualTarget);
-      System.out.println("mode: profile");
-      SmartDashboard.putNumber("error2",actualTarget - Robot.elevator.getPosition());
+      //System.out.println("mode: profile");
+      //SmartDashboard.putNumber("error2",actualTarget - Robot.elevator.getPosition());
     }else{
       //DO PID CONTROL
       double error = (actualTarget) - Robot.elevator.getPosition();
       double output = 0.10 + error * 0.005;
       output = range(output, 0.2, -0.2);
-      System.out.println(error);
+      //System.out.println(error);
       Robot.elevator.move(output);
     }
   }

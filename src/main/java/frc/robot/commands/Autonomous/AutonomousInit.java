@@ -21,8 +21,6 @@ public class AutonomousInit extends CommandGroup {
    */
   public AutonomousInit() {
     addSequential(new CalibrateElevator());
-    addSequential(new ElevateTo(RobotMap.ELEVATOR_MID_POS));
     addSequential(new initPlate());
-    addSequential(new ElevateTo(RobotMap.ELEVATOR_DOWN_POS));
   }
 }

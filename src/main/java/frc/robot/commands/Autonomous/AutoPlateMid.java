@@ -25,15 +25,10 @@ public class AutoPlateMid extends CommandGroup {
   public AutoPlateMid() {
     addSequential(new AutonomousInit());
     addParallel(new ElevateTo_NEW(RobotMap.ELEVATOR_DOWN_POS));
-    addSequential(new Delay(1));
-    addSequential(new PosDrive(0.2631,-3.012,Math.PI/2));
-    addSequential(new TurnTo(Math.PI/2));
-    addParallel(new Drive(-0.2));
-    addSequential(new Delay(2));
-    addSequential(new PlacePlate());
     addSequential(new Delay(0.5));
-    addParallel(new Drive(0.2));
-    addSequential(new Delay(1.5));
-    addSequential(new PosDrive(0.2631,-3.012,Math.PI/2));
+    addSequential(new Drive(-0.3));
+    addSequential(new Delay(3));
+    addSequential(new TurnTo(Math.PI/2));
+
   }
 }

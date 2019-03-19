@@ -21,6 +21,7 @@ import frc.robot.commands.Elevator.ReleaseClimber;
 import frc.robot.commands.Elevator.moveToDown;
 import frc.robot.commands.Elevator.moveToMid;
 import frc.robot.commands.Elevator.moveToUp;
+import frc.robot.commands.Intake_Holder.CalibrateHolder;
 import frc.robot.commands.Intake_Holder.HolderToDown;
 import frc.robot.commands.Intake_Holder.HolderToMid;
 import frc.robot.commands.Intake_Holder.HolderToUp;
@@ -31,6 +32,7 @@ import frc.robot.commands.PlateDispenser.Extend;
 import frc.robot.commands.PlateDispenser.PlacePlate;
 import frc.robot.commands.PlateDispenser.Release;
 import frc.robot.commands.PlateDispenser.Retract;
+import frc.robot.commands.PlateDispenser.RetractPH;
 import frc.robot.commands.PlateDispenser.RetrievePlate;
 import frc.robot.commands.Pusher.PusherIn;
 import frc.robot.commands.Pusher.PusherOut;
@@ -86,12 +88,12 @@ public class OI {
     HolderMid.whenPressed(new HolderToMid());
     HolderDown.whenPressed(new HolderToDown());    
     place.whenPressed(new PlacePlate());
-    extend.whenPressed(new PusherOut());
-    retrive.whenPressed(new PusherIn());
+    extend.whenPressed(new CalibrateHolder());
+    retrive.whenPressed(new RetractPH());
     intake.whenPressed(new IntakeBall());
     RetrivePlate.whenPressed(new RetrievePlate());
     shoot.whenPressed(new Shoot2());
-    cargo.whenPressed(new ElevateTo(RobotMap.ELEVATOR_CARGO_POS));
+    cargo.whenPressed(new ElevateTo_NEW(RobotMap.ELEVATOR_CARGO_POS));
   }
   // There are a few additional built in buttons you can use. Additionally,
   // by subclassing Button you can create custom triggers and bind those to
